@@ -2,10 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-// GitHub Pages ²¿Êğ:base ¸Ä '/<repo-name>/'(ÓÃ function ĞÎÊ½Çø·Ö dev ºÍ build)
-export default defineConfig(({ command }) => ({
+// Render / è‡ªå®šä¹‰åŸŸåéƒ¨ç½²ç”¨ '/', GitHub Pages éƒ¨ç½²æ—¶æ”¹ä¸º '/<repo å>/'
+export default defineConfig({
   plugins: [react()],
-  // Render / ×Ô¶¨ÒåÓòÃû²¿ÊğÓÃ '/',GitHub Pages ²¿ÊğÊ±¸ÄÎª '/<repo Ãû>/'
   base: '/',
   build: {
     outDir: 'dist',
@@ -13,6 +12,4 @@ export default defineConfig(({ command }) => ({
     sourcemap: false,
     assetsInlineLimit: 4096,
   },
-}))
-
-
+})
