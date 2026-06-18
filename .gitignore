@@ -1,0 +1,42 @@
+﻿# ===== Logs =====
+logs
+*.log
+*.err
+dev-server.log
+dev-server-err.log
+dev-server.log.err
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ===== Dependencies & Build =====
+node_modules
+dist
+dist-ssr
+*.local
+
+# ===== Environment / secrets =====
+.env
+.env.*
+!.env.example
+
+# ===== Editor & OS =====
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+
+# ===== Vite cache =====
+.vite
+
+# ===== Project-specific:dev artifacts,不要上传 =====
+drafts/
+dev-assets/  # 本地 dev 资源(Hero 参考图/意见图/背景视频源),不上传不进 dist
