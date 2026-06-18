@@ -1,12 +1,12 @@
-ï»¿import { defineConfig } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-// GitHub Pages éƒ¨ç½²:base æ”¹ '/<repo-name>/'(ç”¨ function å½¢å¼åŒºåˆ† dev å’Œ build)
+// GitHub Pages ²¿Êğ:base ¸Ä '/<repo-name>/'(ÓÃ function ĞÎÊ½Çø·Ö dev ºÍ build)
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  // dev ç”¨ '/',build æ‰ç”¨ '/<repo>/',è¿™æ ·æœ¬åœ°é¢„è§ˆ http://localhost:5173/ ç›´æ¥èƒ½å¼€
-  base: command === 'build' ? '/portfolio/' : '/',
+  // Render / ×Ô¶¨ÒåÓòÃû²¿ÊğÓÃ '/',GitHub Pages ²¿ÊğÊ±¸ÄÎª '/<repo Ãû>/'
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
