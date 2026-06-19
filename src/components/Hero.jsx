@@ -114,6 +114,7 @@ export default function Hero() {
     if (!video) return
 
     let rafId = 0
+    let fallbackTimer = 0  // 提前声明避免 handleCanPlay 内 TDZ 报错
     const fadeTo = (from, to, duration, onDone) => {
       const start = performance.now()
       const tick = (now) => {
@@ -126,10 +127,23 @@ export default function Hero() {
     }
 
     const handleCanPlay = () => {
+      // canplay 触发 → 清理 fallback timer,正常淡入
+      clearTimeout(fallbackTimer)
       // 确保视频真的在播放
       video.play().catch(() => {})
       fadeTo(0, 1, 500)
     }
+
+    // 2026-06-19: 5s 还没 canplay 时的 fallback
+    // 之前逻辑是 opacity:0 → canplay → fadeIn,如果视频加载慢(12MB+ 移动网)
+    // 用户会一直看到黑屏+渐变背景,5s 后强制半透明淡入 + 模糊兜底
+    // 保证即使视频没 ready 也至少有个视觉内容
+    const handleFallback = () => {
+      video.play().catch(() => {})
+      video.style.filter = 'blur(20px) saturate(1.15)'
+      fadeTo(0, 0.6, 800)
+    }
+    fallbackTimer = setTimeout(handleFallback, 5000)
 
     if (video.readyState >= 3) {
       // 已经能播放(浏览器缓存命中)
@@ -140,6 +154,7 @@ export default function Hero() {
 
     return () => {
       cancelAnimationFrame(rafId)
+      clearTimeout(fallbackTimer)
       video.removeEventListener('canplay', handleCanPlay)
     }
   }, [])
@@ -278,7 +293,9 @@ export default function Hero() {
           object-fit: cover;
           object-position: right 12% bottom 0;
           opacity: 0;
-          will-change: opacity;
+          will-change: opacity, filter;
+          /* 2026-06-19: 加 filter transition,让 5s fallback 时 blur(20px) 平滑过渡 */
+          transition: opacity 0.5s ease, filter 0.6s ease;
         }
 
         @media (min-width: 1025px) {

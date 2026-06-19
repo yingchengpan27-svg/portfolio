@@ -1,4 +1,6 @@
-﻿const projects = [
+﻿import { useEffect } from 'react'
+
+const projects = [
   {
     id: 1,
     title: 'Apple-style 产品宣传片',
@@ -79,6 +81,36 @@
 ]
 
 export default function Projects() {
+  // 2026-06-19: Projects 卡片视频改用 IntersectionObserver 按需播放
+  // 之前 6 个 video 同时 autoPlay + preload="metadata",在 mobile 上抢带宽,
+  // 第一个视频加载慢导致用户看到黑屏/不播。改成进入视口 ≥50% 才 play(),离开 pause()
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target.querySelector('video')
+          if (!video) return
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            // 进入视口 ≥50% → 播放(.catch 兜底 autoplay 拒绝,如省流量模式)
+            video.play().catch(() => {})
+          } else {
+            // 离开视口 → 暂停,省电省流量
+            video.pause()
+          }
+        })
+      },
+      // threshold 多档:0(刚露)/0.5(半屏)/1(全屏),满足 ≥0.5 触发 play
+      { threshold: [0, 0.5, 1] }
+    )
+
+    const cards = document.querySelectorAll('.projects__card--video')
+    cards.forEach((card) => observer.observe(card))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section className="projects section" id="projects">
       <div className="container">
@@ -106,10 +138,15 @@ export default function Projects() {
                     <video
                       className="projects__card-video"
                       src={p.video}
-                      autoPlay
+                      // 2026-06-19: 移除 autoPlay,改由 IntersectionObserver 按需播放
+                      // (useEffect 在函数顶部)避免 6 个视频同时抢带宽
                       muted
                       loop
                       playsInline
+                      // 微信 X5 内核兼容
+                      webkit-playsinline="true"
+                      x5-video-player-type="h5"
+                      // metadata 只下载元数据,不预下载整段视频
                       preload="metadata"
                     />
                   )}
