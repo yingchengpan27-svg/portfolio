@@ -20,9 +20,23 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60)
+    /* 2026-06-19: scroll 监听用 rAF 节流,避免 setState 频繁触发
+       之前每帧都调 setScrolled,setState 频繁触发 React re-render */
+    let rafId = 0
+    let ticking = false
+    const handleScroll = () => {
+      if (ticking) return
+      ticking = true
+      rafId = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 60)
+        ticking = false
+      })
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (

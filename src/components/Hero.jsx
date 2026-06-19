@@ -5,7 +5,9 @@ export default function Hero() {
     badge: '新媒体全栈操盘手 · AI 视觉创作者',
     title1: '用内容创造',
     title2: '无限可能',
-    desc: '5年短视频全链路运营经验，精通多平台IP打造与AI视觉创作。\n从内容策划到商业变现，用数据驱动增长。',
+    // 2026-06-19: 文案拆成 4 行(每段两行),mobile 居中时左右更对称
+    // 之前两段各一行,21 字自动换行后第二行只 8 字孤悬靠右,看着像没居中
+    desc: '5年短视频全链路运营经验\n精通多平台 IP 打造与 AI 视觉创作。\n从内容策划到商业变现\n用数据驱动增长。',
     stats: [
       { num: '300万+', label: 'GMV 累计成交额' },
       { num: '400万+', label: '单条视频最高播放' },
@@ -664,10 +666,16 @@ export default function Hero() {
             min-width: 0;
             width: 100%;
             max-width: 100%;
+            /* 2026-06-19 FIX: align-items:center 让 inline-flex 子元素(badge/subtitle)
+               自身居中(默认 stretch 对 inline-flex 不生效,导致 badge 贴左 52px) */
+            align-items: center;
           }
 
           .hero__desc { max-width: 640px; }
           .hero__actions { justify-content: center; flex-wrap: wrap; }
+          /* 2026-06-19 FIX: subtitle 宽度被拉伸到全宽 327px,内部 justify-content:normal
+             (=flex-start) 让文字贴左;改为 center 让"用内容创造无限可能"居中 */
+          .hero__subtitle { justify-content: center; }
           .hero__stats { margin: 0 auto; width: 100%; }
 
         }
@@ -684,6 +692,16 @@ export default function Hero() {
             padding: 1.5rem;
             width: 100%;
           }
+          /* FIX 2026-06-19: hero__stats 已 column,但内层 hero__stats-glass 还是 row,
+             导致三个 stat + 两个 divider 横排,min-content ~504px 撑破容器。
+             mobile 必须把内层也改 column,三个 stat 垂直堆叠。 */
+          .hero__stats-glass {
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+            width: 100%;
+            min-width: 0;             /* flex item 兜底,允许收缩 */
+          }
           .hero__stat-divider {
             width: 60px;
             height: 1px;
@@ -692,6 +710,63 @@ export default function Hero() {
             text-align: center;
           }
           .hero__scroll { display: none; }
+
+          /* ============================================================
+             mobile 响应式补丁 (2026-06-19)
+             桌面端:hover 触发的 wipe 动效完全不受影响
+             ============================================================ */
+          /* FIX 2026-06-19: GSAP 残留 inline transform 兜底
+             React 19 StrictMode 下 useLayoutEffect 双调用,
+             gsap.context().revert() 可能把动画卡在 from 起点,
+             导致 hero__subtitle 等元素 inline style = transform:translate(-20px,0),
+             偏移 hero__copy 中轴。CSS !important 强制清除。
+             max-width:768px 只在 mobile 触发,桌面端入场动画不受影响。 */
+          .hero__subtitle,
+          .hero__stats,
+          .hero__title-line,
+          .hero__badge,
+          .hero__scroll,
+          .hero__desc > span,
+          .nav {
+            transform: none !important;
+            opacity: 1 !important;
+            clip-path: none !important;
+          }
+
+          /* 关键修复:mobile 没 hover,完全隐藏 fill 层
+             否则 width:0 的盒子仍会渲染 4px 紫色 border-right,
+             "潘英成"右侧会一直挂一根紫竖条 */
+          .hero__title-fill {
+            display: none;
+          }
+
+          /* 副标题前的装饰横线在 mobile 去掉,让"用内容创造无限可能"完全居中
+             桌面端保留(设计装饰元素) */
+          .hero__subtitle-bar {
+            display: none;
+          }
+
+          /* iOS Safari 100vh 含地址栏 bug → 用 100dvh 兜底
+             -webkit-fill-available 是 iOS 老版本 fallback,后者覆盖前者 */
+          .hero {
+            min-height: -webkit-fill-available;
+            min-height: 100dvh;
+          }
+
+          /* 标题在 mobile 略缩,避免与下方 stats 挤 */
+          .hero__title {
+            font-size: clamp(2.4rem, 9vw, 3.5rem);
+          }
+
+          /* 按钮组在窄屏允许按钮换行 */
+          .hero__actions {
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+          }
+
+          /* 按钮文字稍小,适配 360px 屏 */
+          .btn-uv { font-size: 16px; min-width: 130px; }
+          .btn-uv span { padding: 14px 18px; font-size: 0.88rem; }
         }
       `}</style>
     </section>

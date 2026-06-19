@@ -369,22 +369,31 @@ export default function Contact() {
         }
 
         @media (max-width: 640px) {
-          /* mobile 改成纵向堆叠,不要横排堆叠(margin 负值在 360px 屏会溢出) */
+          /* FIX 2026-06-19: 隐藏第 3 张 "所在地" 卡片(用户需求) */
+          .contact__card:nth-child(3) {
+            display: none !important;
+          }
+          /* 改回 row 布局,让剩下两张卡(电话+邮箱)并排
+             360px 屏分两列各 ~180px,gap 0.75rem */
           .contact__cards {
-            flex-direction: column;
-            gap: 1rem;
+            flex-direction: row;
+            gap: 0.75rem;
             min-height: auto;
             align-items: stretch;
+            justify-content: center;
           }
           .contact__card {
-            width: 100%;
-            max-width: 320px;
+            flex: 1;
+            width: auto;
+            max-width: none;
             height: auto;
-            min-height: 160px;
-            padding: 1.5rem 1.2rem;
+            /* 2026-06-19: 增加 min-height 让 value 和按钮有间距
+               之前 min-height: auto (实测 cardH=113px),按钮覆盖 value 15px
+               现在 180px 给装饰条 40px + 按钮 30px + value 上方内容留足够空间 */
+            min-height: 180px;
+            padding: 1.2rem 0.8rem;
             margin: 0;
-            /* 取消旋转,移动端 hover 不可用,保持平铺
-               !important 强制覆盖 GSAP 留下的 inline transform (2026-06-19) */
+            /* !important 强制覆盖 GSAP 留下的 inline transform (2026-06-19) */
             transform: none !important;
           }
           /* mobile 没有 hover,直接平铺,不需要父容器展开效果 */
@@ -392,6 +401,37 @@ export default function Contact() {
           .contact__card:hover {
             transform: none;
             margin: 0;
+          }
+
+          /* ============================================================
+             mobile 响应式补丁 (2026-06-19)
+             ============================================================ */
+          /* 去掉 contact section 的 100vh,iOS 100vh bug 让 mobile contact 区过高 */
+          .contact {
+            min-height: auto;
+            padding: 4rem 0;
+          }
+          /* card-value(邮箱/电话)长字符串允许断行,防溢出 */
+          .contact__card-value {
+            font-size: 0.78rem;
+            word-break: break-all;
+            line-height: 1.4;
+            /* 邮箱太长时强制断行 */
+            overflow-wrap: anywhere;
+          }
+          /* subtitle 在窄屏缩字号 */
+          .contact__subtitle {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+          }
+          /* 卡内 icon 略缩,跟紧凑布局匹配 */
+          .contact__card-icon {
+            margin-bottom: 0.6rem;
+          }
+          .contact__card-icon svg {
+            width: 20px;
+            height: 20px;
           }
           /* mobile 按钮绝对定位到装饰条正中央 (上下左右都居中) (2026-06-19 v4)
              desktop 端保持原状不动,只改 mobile

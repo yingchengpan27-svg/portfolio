@@ -66,7 +66,9 @@ export default function About() {
             <div className="about__avatar-wrap">
               <div className="about__avatar-glow" />
               <img
-                src="/avatar-hd.jpg"
+                src="/avatar.jpg"
+                // 2026-06-19: 原写 avatar-hd.jpg,但 public/ 下没有这个文件,只有 avatar.jpg
+                // 404 导致头像圈里只剩 alt 文字;改成实际存在的文件
                 alt={info.name}
                 className="about__avatar"
               />
@@ -673,9 +675,66 @@ export default function About() {
           }
         }
 
-        @media (max-width: 480px) {
+        /* ============================================================
+           mobile 响应式补丁 (2026-06-19)
+           桌面端完全不受影响,只在 <=768 / <=640 触发
+           ============================================================ */
+        @media (max-width: 768px) {
+          /* 邮箱/电话按钮:允许换行 + 缩小,避免在 360px 屏挤爆 */
+          .about__contact-glass {
+            flex-wrap: wrap;
+            font-size: 0.78rem;
+            gap: 0.5rem;
+          }
+          .about__copy-btn {
+            font-size: 0.68rem;
+            padding: 0.25rem 0.5rem;
+          }
+          /* mobile 复制按钮只留图标,省横向空间 */
+          .about__copy-btn span { display: none; }
+
+          /* 教育信息:mobile 字号略缩、行高更舒展 */
+          .about__meta {
+            font-size: 0.78rem;
+          }
+          .about__meta span {
+            white-space: normal;
+            line-height: 1.5;
+          }
+        }
+
+        @media (max-width: 640px) {
+          /* 时间线公司描述:去掉 white-space: nowrap,允许换行
+             (原 nowrap + overflow:visible 会让长公司描述撑破容器) */
+          .about__timeline-company {
+            white-space: normal;
+            overflow-wrap: anywhere;
+            font-size: 0.75rem;
+            line-height: 1.5;
+          }
+
+          /* FIX 2026-06-19: data-grid 改 2 列(用户需求)
+             之前 1fr 是为了 360px 屏防截断,但实际 "GMV 累计成交额" 在 2 列下也能放下。
+             2 行 2 排更紧凑,符合用户期望。 */
           .about__data-grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+          }
+          /* data-card padding 略缩,留更多空间给 label */
+          .about__data-glass {
+            padding: 1rem 0.75rem;
+          }
+          .about__data-num {
+            font-size: 1.2rem;
+          }
+          .about__data-label {
+            font-size: 0.7rem;
+          }
+
+          /* 头像容器在 mobile 略缩小 */
+          .about__avatar-wrap {
+            width: 160px;
+            height: 160px;
           }
         }
       `}</style>

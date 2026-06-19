@@ -25,6 +25,19 @@
     row: '1',
   },
   {
+    id: 6,
+    title: '影石360产品TVC广告',
+    category: 'AI 视觉创作',
+    desc: '独立主导影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
+    tags: ['AI视频', '多模态', '产品宣传'],
+    gradient: 'linear-gradient(135deg, #0a0a0f 0%, #6366f1 100%)',
+    icon: '💻',
+    video: '/insta360-x3.mp4',
+    link: 'https://www.xinpianchang.com/a13721953?from=webShare&channel=copyLink',
+    col: '3',
+    row: '2',
+  },
+  {
     id: 5,
     title: '个人游戏短视频账号',
     category: '独立运营',
@@ -62,19 +75,6 @@
     link: 'https://space.bilibili.com/24801003',
     col: '3',
     row: '3',
-  },
-  {
-    id: 6,
-    title: '影石360产品TVC广告',
-    category: 'AI 视觉创作',
-    desc: '独立主导影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
-    tags: ['AI视频', '多模态', '产品宣传'],
-    gradient: 'linear-gradient(135deg, #0a0a0f 0%, #6366f1 100%)',
-    icon: '💻',
-    video: '/insta360-x3.mp4',
-    link: 'https://www.xinpianchang.com/a13721953?from=webShare&channel=copyLink',
-    col: '3',
-    row: '2',
   },
 ]
 
@@ -121,13 +121,15 @@ export default function Projects() {
                 <div className="projects__card-body">
                   <h3 className="projects__card-title">{p.title}</h3>
                   <p className="projects__card-desc">{p.desc}</p>
+                  {/* 2026-06-19: 用户要求去掉 Apple-style 卡片(id=1)的 3 个标签
+                      整段条件渲染注释掉,保留 p.tags 数据,未来想恢复取消注释即可
                   {i === 0 && (
                     <div className="projects__card-tags">
                       {p.tags.map(t => (
                         <span key={t} className="projects__tag">{t}</span>
                       ))}
                     </div>
-                  )}
+                  )} */}
                 </div>
               </CardTag>
             )
@@ -359,15 +361,49 @@ export default function Projects() {
             grid-column: 1 / -1 !important;
             grid-row: auto !important;
             height: auto;
-            min-height: 420px;
+            min-height: auto;     /* FIX 2026-06-19: 取消 420,让高度自适应 4:3 + body */
           }
-          .projects__card-visual {
-            height: 240px;
-            min-height: 240px;
-          }
+
+          /* FIX 2026-06-19: 手机端顺序通过修改 projects 数组顺序调换(见顶部 const projects)
+             原数组顺序: 1, 2, 5(游戏), 3(医生), 4(B站), 6(影石)
+             新数组顺序: 1, 2, 6(影石), 3(医生), 4(B站), 5(游戏) — 影石和游戏调换
+             桌面端每个卡都有 inline gridColumn/gridRow 显式定位,DOM 顺序不影响桌面端布局。
+             (曾用 CSS order 尝试但失败:order 是优先级权重,不是绝对行号) */
+
+          /* FIX 2026-06-19: 视频卡改 4:3 比例
+             关键:flex: none 覆盖 desktop 的 flex:1,否则 flex-basis 撑满整个 card 高度
+             aspect-ratio: 4/3 + height: auto 让 width 决定 height = width * 3/4 */
+          .projects__card-visual,
           .projects__card--featured .projects__card-visual {
-            height: 280px;
-            min-height: 280px;
+            flex: none;
+            aspect-ratio: 4 / 3;
+            height: auto;
+            min-height: 0;
+            max-height: none;
+          }
+
+          /* FIX 2026-06-19: mobile 没法 hover,半透明底板和文字常驻显示
+             desktop 的抽屉式 transform: translateY(100%) → 0 在 mobile 上改为 none
+             featured 的 padding 也略缩,跟普通卡一致 */
+          .projects__card-body {
+            transform: none !important;
+            padding: 1.2rem !important;
+            background: linear-gradient(to top, rgba(3,6,15,0.95) 0%, rgba(3,6,15,0.78) 55%, rgba(3,6,15,0.3) 85%, transparent 100%) !important;
+          }
+          .projects__card--featured .projects__card-body {
+            padding: 1.2rem !important;
+          }
+          /* featured 的描述文字在 mobile 上也常驻,字号略缩 */
+          .projects__card--featured .projects__card-title {
+            font-size: 1.15rem;
+          }
+          .projects__card-desc {
+            font-size: 0.78rem;
+            /* 限制行数,mobile 卡片高度变小,不能太多行 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
           }
         }
       `}</style>
