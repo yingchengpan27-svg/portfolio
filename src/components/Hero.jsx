@@ -25,6 +25,12 @@ export default function Hero() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
 
+    // 性能优化:mobile 减少粒子数 + 关闭连线城市（双重循环 80*80=6400 次/帧 → 手机发烫）
+    // 之前 80 粒子 + connectParticles() 在 iPhone 上掉帧严重
+    const isMobile = window.matchMedia('(max-width: 768px)').matches
+    const particleCount = isMobile ? 28 : 80
+    const connectDistance = isMobile ? 0 : 150  // 0 = 关闭连线,只画粒子
+
     let animationId
     let particles = []
     const resize = () => {
@@ -61,19 +67,21 @@ export default function Hero() {
       }
     }
 
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle())
     }
 
     const connectParticles = () => {
+      // mobile 跳过双重循环(connectDistance=0 时不进入内部)
+      if (connectDistance === 0) return
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x
           const dy = particles[i].y - particles[j].y
           const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 150) {
+          if (dist < connectDistance) {
             ctx.beginPath()
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / 150)})`
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / connectDistance)})`
             ctx.lineWidth = 0.5
             ctx.moveTo(particles[i].x, particles[i].y)
             ctx.lineTo(particles[j].x, particles[j].y)
@@ -142,12 +150,20 @@ export default function Hero() {
         <video
           ref={videoRef}
           className="hero__bg-video"
-          src="/%E8%83%8C%E6%99%AF%E8%A7%86%E9%A2%911.mp4"
+          src="/背景视频1.mp4"
           muted
           autoPlay
           loop
           playsInline
-          preload="auto"
+          // 旧版 iOS Safari / 微信内置浏览器兼容:加 webkit 前缀,避免自动全屏播放
+          // iOS 10 之前只认 webkit-playsinline,iOS 10+ 才开始认 playsInline
+          webkit-playsinline="true"
+          // 微信 X5 内核:防止视频被劫持跳转
+          x5-video-player-type="h5"
+          x5-video-orientation="portrait"
+          // 2026-06-19: auto → metadata,只下载 metadata 不预下载整个视频
+          // 首屏只加载几 KB 元数据,真正播放时再分段下载
+          preload="metadata"
           aria-hidden="true"
         />
         <div className="hero__gradient hero__gradient--1" />

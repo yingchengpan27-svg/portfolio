@@ -283,19 +283,26 @@ export default function Contact() {
         }
 
         .contact__card-value {
+          display: block;          /* 2026-06-19: span 默认 inline,跟 inline-flex 按钮横排;强制 block 独立成行 */
           font-size: 0.9rem;
           font-weight: 500;
           color: #ffffff;
         }
 
-        /* 复制按钮 — 卡片底部居中,玻璃风格 */
+        /* 复制按钮 — absolute 装饰条正中央(横竖都居中),counter-rotate 保持水平 (2026-06-19 v3) */
         .contact__copy-btn {
+          position: absolute;
+          /* 装饰条 40px 高,按钮 32px 高,垂直居中需要 (40-32)/2 = 4px */
+          bottom: 4px;
+          left: 50%;
+          /* counter-rotate: 抵消父卡片的旋转,按钮始终保持水平 */
+          transform: translateX(-50%) rotate(calc(var(--r) * -1deg));
+          z-index: 2;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 0.35rem;
-          margin-top: 0.85rem;
-          padding: 0.35rem 0.75rem;
+          padding: 0.35rem 0.95rem;
           font-size: 0.72rem;
           font-weight: 500;
           color: #ff9966;
@@ -303,20 +310,29 @@ export default function Contact() {
           border: 1px solid rgba(255, 153, 102, 0.3);
           border-radius: 100px;
           cursor: pointer;
-          transition: all 0.25s ease;
+          /* 不动 transform,只动背景/边框/阴影 */
+          transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
           font-family: inherit;
           letter-spacing: 0.02em;
           user-select: none;
         }
 
+        /* 父卡片 hover 时 transform 被覆盖为 rotate(0deg),按钮也跟着回到纯居中 */
+        .contact__card:hover .contact__copy-btn,
+        .contact__cards:hover .contact__copy-btn {
+          transform: translateX(-50%);
+        }
+
         .contact__copy-btn:hover {
           background: rgba(255, 153, 102, 0.22);
           border-color: rgba(255, 153, 102, 0.55);
-          transform: translateY(-1px);
+          box-shadow: 0 -2px 10px rgba(255, 153, 102, 0.35);
         }
 
         .contact__copy-btn:active {
-          transform: translateY(0);
+          /* 保持 translateX(-50%) 居中,不被覆盖 */
+          transform: translateX(-50%);
+          box-shadow: none;
         }
 
         .contact__copy-btn--copied {
@@ -353,18 +369,43 @@ export default function Contact() {
         }
 
         @media (max-width: 640px) {
+          /* mobile 改成纵向堆叠,不要横排堆叠(margin 负值在 360px 屏会溢出) */
           .contact__cards {
-            gap: 0;
-            min-height: 180px;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: auto;
+            align-items: stretch;
           }
           .contact__card {
-            width: 140px;
-            height: 180px;
-            padding: 1.5rem 0.8rem;
-            margin: 0 -25px;
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            min-height: 160px;
+            padding: 1.5rem 1.2rem;
+            margin: 0;
+            /* 取消旋转,移动端 hover 不可用,保持平铺
+               !important 强制覆盖 GSAP 留下的 inline transform (2026-06-19) */
+            transform: none !important;
           }
-          .contact__cards:hover .contact__card {
-            margin: 0 4px;
+          /* mobile 没有 hover,直接平铺,不需要父容器展开效果 */
+          .contact__cards:hover .contact__card,
+          .contact__card:hover {
+            transform: none;
+            margin: 0;
+          }
+          /* mobile 按钮绝对定位到装饰条正中央 (上下左右都居中) (2026-06-19 v4)
+             desktop 端保持原状不动,只改 mobile
+             FIX 2026-06-19 v5: 之前改回 static 紧挨 value,但用户反馈按钮位置不对,
+             现在改回 absolute + bottom:5px 真正在装饰条中央 */
+          .contact__copy-btn {
+            position: absolute;
+            /* 装饰条 40px - 按钮 ~30px = 10px, /2 = 5px 垂直居中 */
+            bottom: 5px;
+            left: 50%;
+            /* 水平居中;mobile 卡片不旋转,不需要 counter-rotate */
+            transform: translateX(-50%);
+            padding: 0.3rem 0.7rem;
+            font-size: 0.68rem;
           }
         }
       `}</style>

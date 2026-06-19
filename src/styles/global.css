@@ -55,6 +55,9 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 关键:html 也加 overflow-x 保险,某些情况下 body 单独设置不够
+     防止 mobile 横向溢出产生白边/可滚动 */
+  overflow-x: hidden;
 }
 
 body {
@@ -78,6 +81,8 @@ body {
 }
 
 img { max-width: 100%; display: block; }
+/* mobile 关键修复:所有 video 强制 max-width:100%,防止某些场景(absolute 定位)溢出容器 */
+video { max-width: 100%; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; border: none; background: none; }
 

@@ -497,7 +497,27 @@ export default function Skills() {
             grid-template-columns: 1fr;
           }
           .skills__card {
-            height: 320px;
+            height: auto;
+            min-height: 360px;
+          }
+          /* 关键:mobile 禁用 3D 翻转(mobile 没有 hover,且 3D + 5 个动画掉帧严重)
+             改成直接展示正面内容,触摸点击不翻转 */
+          .skills__card-content {
+            transform: none !important;
+          }
+          /* 背面在 mobile 不显示,只显示正面 */
+          .skills__card-back {
+            display: none;
+          }
+          /* 正面取消 rotateY(180deg) 初始隐藏,直接显示 */
+          .skills__card-front {
+            transform: none;
+            position: relative;
+            inset: auto;
+          }
+          /* 减少动效复杂度:关闭 3 个 orb 模糊,避免 mobile 渲染压力 */
+          .skills__card-orb {
+            filter: blur(40px);
           }
         }
       `}</style>

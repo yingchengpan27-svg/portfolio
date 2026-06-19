@@ -99,6 +99,24 @@ export default function DynamicBackground() {
           pointer-events: none;
           z-index: 0;
           background: #03060f;
+          /* 2026-06-19: contain: paint 隔离渲染,减少对外部 layout 重排的影响 */
+          contain: paint;
+        }
+
+        /* 2026-06-19: mobile 端彻底关闭 ribbon 和重模糊动画
+           mobile 上 filter: blur(70px)+mix-blend-mode: screen 直接掉帧 */
+        @media (max-width: 768px) {
+          .ribbon { display: none; }
+          /* mobile 关闭一半 stream + 减小 blur,保留背景氛围但大幅降低 GPU */
+          .stream--blue-2,
+          .stream--orange-2,
+          .stream--orange-3 { display: none; }
+          .stream { filter: blur(40px); will-change: auto; }
+        }
+
+        /* prefers-reduced-motion 用户:全部动画停止 (2026-06-19) */
+        @media (prefers-reduced-motion: reduce) {
+          .stream, .ribbon { animation: none !important; }
         }
 
         .dynamic-bg__base {

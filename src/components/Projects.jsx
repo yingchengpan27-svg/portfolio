@@ -347,12 +347,27 @@ export default function Projects() {
           }
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .projects__grid {
             grid-template-columns: 1fr;
+            grid-auto-rows: auto;
           }
+          /* 关键:清除 inline style 设的显式 col/row,单列时让卡片自然堆叠
+             否则 gridColumn: '1', gridRow: '3' 会让卡 5 跑到第 3 行(中间空 2 行) */
+          .projects__card,
           .projects__card--featured {
-            grid-column: span 1;
+            grid-column: 1 / -1 !important;
+            grid-row: auto !important;
+            height: auto;
+            min-height: 420px;
+          }
+          .projects__card-visual {
+            height: 240px;
+            min-height: 240px;
+          }
+          .projects__card--featured .projects__card-visual {
+            height: 280px;
+            min-height: 280px;
           }
         }
       `}</style>

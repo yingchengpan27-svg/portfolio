@@ -486,7 +486,8 @@ export default function About() {
           position: relative;
           z-index: 1;
           padding: 2rem;
-          background: rgba(255, 255, 255, 0.08);
+          /* 2026-06-19: 背景透明度从 0.08 提到 0.2,让里面紫色文字更清晰 (blob 不再干扰阅读) */
+          background: rgba(255, 255, 255, 0.2);
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
           border-radius: 16px;
@@ -652,7 +653,10 @@ export default function About() {
 
         .about__timeline-company {
           font-size: 0.8rem;
-          color: var(--text-muted);
+          /* 2026-06-19 v2: 描述文字改成主体紫色 var(--accent)=#6366f1 */
+          color: var(--accent);
+          /* 2026-06-19 v3: 主紫色 30% 透明度文字投影,轻微发光效果 */
+          text-shadow: 0 0 6px rgba(99, 102, 241, 0.3);
           white-space: nowrap;
           overflow: visible;
         }

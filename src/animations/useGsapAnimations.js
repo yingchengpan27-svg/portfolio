@@ -17,6 +17,10 @@ export function useGsapAnimations() {
       const isMobile = window.matchMedia('(max-width: 640px)').matches
       const dur = isMobile ? 0.7 : 1.2
 
+      // 2026-06-19: 尊重 prefers-reduced-motion 系统设置,用户偏好无动画时全部跳过
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (prefersReduced) return
+
       // ==========================================
       //  HERO OPENING — 整段开场(无 ScrollTrigger)
       // ==========================================
@@ -86,17 +90,20 @@ export function useGsapAnimations() {
         delay: 2.4,
       })
 
-      // Hero 背景视差
-      gsap.to('.hero__bg, .hero__bg-video, .hero__canvas', {
-        yPercent: 18,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.8,
-        },
-      })
+      // Hero 背景视差 — 2026-06-19: mobile 关闭视差
+      // scrollTrigger scrub 模式持续触发重绘,移动端会卡顿
+      if (!isMobile) {
+        gsap.to('.hero__bg, .hero__bg-video, .hero__canvas', {
+          yPercent: 18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 0.8,
+          },
+        })
+      }
 
       // ==========================================
       //  滚动触发 — 每个模块进场

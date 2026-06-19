@@ -169,29 +169,50 @@ export default function Navbar() {
         }
 
         @media (max-width: 768px) {
+          /* 2026-06-19: mobile 端去掉"优势"菜单项,desktop 端保留
+             用属性选择器匹配 href="#skills",不修改 JSX */
+          .nav__link[href="#skills"] {
+            display: none;
+          }
+          /* mobile 菜单改成右上角小卡片下拉 (2026-06-19)
+             之前是 position:fixed 全屏菜单,改成 absolute + 小卡片浮在 burger 按钮下方 */
           .nav__links {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 15, 0.98);
+            position: absolute;
+            top: calc(100% + 0.5rem);   /* nav 容器下方 8px */
+            right: 1rem;                /* 跟 burger 按钮右对齐 */
+            min-width: 180px;
+            background: rgba(10, 10, 15, 0.92);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.5rem;
             flex-direction: column;
-            justify-content: center;
-            gap: 2.5rem;
+            justify-content: flex-start;
+            gap: 0.15rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s;
+            transform: translateY(-8px);
+            transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
           }
 
           .nav__links--open {
             opacity: 1;
             pointer-events: all;
+            transform: translateY(0);
           }
 
           .nav__link {
-            font-size: 1.5rem;
+            font-size: 0.95rem;
             font-weight: 500;
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+          }
+
+          .nav__link:hover {
+            background: rgba(99, 102, 241, 0.15);
           }
 
           .nav__cta { display: none; }
