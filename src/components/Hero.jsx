@@ -649,16 +649,26 @@ export default function Hero() {
 
         @media (max-width: 1024px) {
           .hero__layout {
-            grid-template-columns: 1fr;
+            /* 2026-06-19: 1fr → minmax(0, 1fr),允许 grid item 收缩到内容以下
+               之前 1fr = minmax(auto, 1fr),grid item min-width:auto 让 inline-flex 子元素
+               (subtitle width=552px) 撑大 grid column,导致 viewport (390px) 右侧溢出 */
+            grid-template-columns: minmax(0, 1fr);
             text-align: center;
             justify-items: center;
             gap: 2.5rem;
             min-height: auto;
           }
 
+          .hero__copy {
+            /* 关键:grid item 加 min-width:0 才能在 inline-flex 子元素撑大时不被拉伸 */
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+          }
+
           .hero__desc { max-width: 640px; }
-          .hero__actions { justify-content: center; }
-          .hero__stats { margin: 0 auto; }
+          .hero__actions { justify-content: center; flex-wrap: wrap; }
+          .hero__stats { margin: 0 auto; width: 100%; }
 
         }
 

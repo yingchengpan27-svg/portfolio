@@ -492,6 +492,15 @@ export default function Skills() {
           }
         }
 
+        /* 2026-06-19: mobile 端隐藏整个 Skills section
+           Render 部署版缺这条规则,导致 mobile 用户看到核心优势页面
+           !important 强制覆盖 inline style (GSAP 可能残留) */
+        @media (max-width: 768px) {
+          .skills {
+            display: none !important;
+          }
+        }
+
         @media (max-width: 640px) {
           .skills__grid {
             grid-template-columns: 1fr;
