@@ -3,9 +3,9 @@
 const projects = [
   {
     id: 1,
-    title: 'Apple-style 产品宣传片',
+    title: 'Apple-style 产品TVC广告',
     category: 'AI 视觉创作',
-    desc: '运用前沿多模态AI工作流，独立交付Apple极简高科技感产品宣传片，解决AI视频画面一致性与物理阴影过渡等技术痛点。',
+    desc: '运用前沿多模态AI工作流，独立制作Apple极简高科技感产品宣传片，解决AI视频画面一致性与物理阴影过渡等技术痛点。',
     tags: ['AI视频', '多模态', '产品宣传'],
     gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
     icon: '🎬',
@@ -30,7 +30,7 @@ const projects = [
     id: 6,
     title: '影石360产品TVC广告',
     category: 'AI 视觉创作',
-    desc: '独立主导影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
+    desc: '独立完成影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
     tags: ['AI视频', '多模态', '产品宣传'],
     gradient: 'linear-gradient(135deg, #0a0a0f 0%, #6366f1 100%)',
     icon: '💻',
@@ -54,7 +54,7 @@ const projects = [
   },
   {
     id: 3,
-    title: '「正畸赵志河」医生IP运营',
+    title: '抖音医生IP运营',
     category: '短视频IP运营',
     desc: '全链路负责医生IP运营，策划多条百万级爆款视频，半年自然涨粉5万+，推动账号累计GMV超200万。',
     tags: ['抖音', 'IP运营', '百万GMV'],
@@ -67,7 +67,7 @@ const projects = [
   },
   {
     id: 4,
-    title: 'B站头部达人账号运营',
+    title: 'B站达人账号运营',
     category: '内容全链路运营',
     desc: '负责「口语老炮儿马思瑞」「夏波波Brian」选题策划与全渠道运营，1年助力两大账号涨粉40万+与60万+。',
     tags: ['B站', '涨粉100万+', '商业变现'],

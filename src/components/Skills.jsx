@@ -8,19 +8,19 @@
     badge: '01 / 06',
   },
   {
-    icon: '📊',
-    title: '数据驱动增长',
-    subtitle: 'Data-Driven Growth',
-    desc: '实时监控播放、完播、互动率等核心指标，基于数据动态迭代内容策略，深度掌握平台算法与流量分发逻辑。',
-    tags: ['数据分析', '算法优化', '增长策略'],
-    badge: '02 / 06',
-  },
-  {
     icon: '🤖',
     title: 'AI 多模态创作',
     subtitle: 'AI Multimodal Creation',
     desc: '紧跟前沿AI技术，熟练运用多模态AI工具深度赋能内容生产，精通提示词工程，解决画面一致性等技术痛点。',
     tags: ['AI视频', '提示词工程', '多模态'],
+    badge: '02 / 06',
+  },
+  {
+    icon: '📊',
+    title: '数据驱动增长',
+    subtitle: 'Data-Driven Growth',
+    desc: '实时监控播放、完播、互动率等核心指标，基于数据动态迭代内容策略，深度掌握平台算法与流量分发逻辑。',
+    tags: ['数据分析', '算法优化', '增长策略'],
     badge: '03 / 06',
   },
   {
