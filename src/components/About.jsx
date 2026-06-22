@@ -736,6 +736,18 @@ export default function About() {
             width: 160px;
             height: 160px;
           }
+
+          /* 2026-06-22 招 4 实施:
+             mobile 关掉 5 个毛玻璃卡的 blur,GPU 合成层压力减半
+             半透明 rgba 底色继续保留,视觉差异很小 */
+          .about__name-glass,
+          .about__contact-glass,
+          .about__intro-glass,
+          .about__timeline-glass,
+          .about__data-glass {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </section>

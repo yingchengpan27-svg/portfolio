@@ -1,0 +1,1 @@
+{"function":"() => { const el = document.querySelector('#projects'); if (el) el.scrollIntoView({behavior:'instant', block:'start'}); return document.documentElement.scrollTop; }"}

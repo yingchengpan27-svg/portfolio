@@ -231,6 +231,15 @@ export default function Navbar() {
 
           .nav__cta { display: none; }
           .nav__burger { display: flex; }
+
+          /* 2026-06-22 招 4 实施:
+             mobile 关掉 nav 的毛玻璃 blur(滚动时 nav + 下拉菜单都用 backdrop-filter)
+             mobile 改用纯半透明底色,GPU 压力减半 */
+          .nav--scrolled,
+          .nav__links {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </nav>

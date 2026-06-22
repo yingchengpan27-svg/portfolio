@@ -442,6 +442,15 @@ export default function Projects() {
             -webkit-box-orient: vertical;
             overflow: hidden;
           }
+
+          /* 2026-06-22 招 4 实施 — 补漏:
+             .projects__card-link-icon 在所有 6 张卡片右上角渲染,
+             mobile 端 6 个 blur(8px) 一起跑也是 GPU 压力,关掉
+             半透明黑底 rgba(0,0,0,0.5) 视觉上几乎无差异 */
+          .projects__card-link-icon {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </section>

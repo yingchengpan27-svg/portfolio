@@ -528,6 +528,16 @@ export default function Skills() {
           .skills__card-orb {
             filter: blur(40px);
           }
+
+          /* 2026-06-22 招 4 实施:
+             Skills 区 mobile display:none,这些 backdrop-filter 实际不会渲染
+             但兜底加上,避免未来 mobile 重新启用时漏掉 */
+          .skills__card-front,
+          .skills__card-back,
+          .skills__card-back-content {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </section>

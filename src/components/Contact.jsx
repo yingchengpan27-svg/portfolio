@@ -447,6 +447,14 @@ export default function Contact() {
             padding: 0.3rem 0.7rem;
             font-size: 0.68rem;
           }
+
+          /* 2026-06-22 招 4 实施:
+             mobile 关掉联系卡的毛玻璃 blur,GPU 压力减半
+             半透明底色保留,视觉差异很小 */
+          .contact__card {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </section>

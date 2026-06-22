@@ -1,4 +1,5 @@
 ﻿import { useEffect, useRef, Fragment } from 'react'
+// 2026-06-22: 招 3 实施 — 完全删除 canvas 粒子 useEffect 块(下面已删),保留 video useEffect
 
 export default function Hero() {
   const heroData = {
@@ -19,94 +20,11 @@ export default function Hero() {
     ],
   };
 
-  const canvasRef = useRef(null)
   const videoRef = useRef(null)
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-
-    // 性能优化:mobile 减少粒子数 + 关闭连线城市（双重循环 80*80=6400 次/帧 → 手机发烫）
-    // 之前 80 粒子 + connectParticles() 在 iPhone 上掉帧严重
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-    const particleCount = isMobile ? 28 : 80
-    const connectDistance = isMobile ? 0 : 150  // 0 = 关闭连线,只画粒子
-
-    let animationId
-    let particles = []
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    resize()
-    window.addEventListener('resize', resize)
-
-    class Particle {
-      constructor() {
-        this.reset()
-      }
-      reset() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
-        this.size = Math.random() * 1.5 + 0.5
-        this.speedX = (Math.random() - 0.5) * 0.3
-        this.speedY = (Math.random() - 0.5) * 0.3
-        this.opacity = Math.random() * 0.4 + 0.1
-      }
-      update() {
-        this.x += this.speedX
-        this.y += this.speedY
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
-      }
-      draw() {
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`
-        ctx.fill()
-      }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle())
-    }
-
-    const connectParticles = () => {
-      // mobile 跳过双重循环(connectDistance=0 时不进入内部)
-      if (connectDistance === 0) return
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < connectDistance) {
-            ctx.beginPath()
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / connectDistance)})`
-            ctx.lineWidth = 0.5
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.stroke()
-          }
-        }
-      }
-    }
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      particles.forEach(p => { p.update(); p.draw() })
-      connectParticles()
-      animationId = requestAnimationFrame(animate)
-    }
-
-    animate()
-
-    return () => {
-      cancelAnimationFrame(animationId)
-      window.removeEventListener('resize', resize)
-    }
-  }, [])
+  // 2026-06-22: 招 3 实施 — canvas 粒子 useEffect 整块删除
+  // 之前在 mobile 上持续 28 个粒子的 rAF 循环,即使滚出 Hero 视口仍在烧电
+  // 删了之后 Hero 静态氛围由背景渐变 + 视频/静态图承担,完全够用
 
   // 背景视频: canplay 时淡入,确保首帧不闪烁
   useEffect(() => {
@@ -161,9 +79,11 @@ export default function Hero() {
 
   return (
     <section className="hero" id="hero">
-      <canvas ref={canvasRef} className="hero__canvas" />
-
       <div className="hero__bg">
+        {/* 2026-06-22 招 1 实施:
+            desktop 端用 video 背景 (有质感)
+            mobile 端用现成的 hero-bg.webp 静态图 (130KB, 立刻加载完)
+            用 CSS media query 控制显示/隐藏,React 不需要双份逻辑 */}
         <video
           ref={videoRef}
           className="hero__bg-video"
@@ -181,6 +101,13 @@ export default function Hero() {
           // 2026-06-19: auto → metadata,只下载 metadata 不预下载整个视频
           // 首屏只加载几 KB 元数据,真正播放时再分段下载
           preload="metadata"
+          aria-hidden="true"
+        />
+        {/* mobile 端静态背景图 — 130KB WebP,比 2.5MB 视频快 20 倍 */}
+        <img
+          className="hero__bg-img"
+          src="/hero-bg.webp"
+          alt=""
           aria-hidden="true"
         />
         <div className="hero__gradient hero__gradient--1" />
@@ -271,13 +198,6 @@ export default function Hero() {
           overflow: hidden;
         }
 
-        .hero__canvas {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          opacity: 0.35;
-        }
-
         .hero__bg {
           position: absolute;
           inset: 0;
@@ -298,12 +218,30 @@ export default function Hero() {
           transition: opacity 0.5s ease, filter 0.6s ease;
         }
 
+        /* 2026-06-22 招 1 实施:
+           mobile 端静态背景图,默认 desktop 隐藏 (display:none)
+           mobile 媒体查询内切换成 display:block,把 video 切到 display:none */
+        .hero__bg-img {
+          display: none;
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: right 12% bottom 0;
+        }
+
         @media (min-width: 1025px) {
           .hero__bg-video { object-position: right -2% bottom 0; }
         }
 
         @media (max-width: 768px) {
-          .hero__bg-video { object-position: center bottom 0; }
+          /* 2026-06-22 招 1 实施:
+             mobile 完全切到 hero-bg.webp 静态图,video 元素 display:none
+             (display:none 浏览器会停止 video 解码,彻底省电省带宽) */
+          .hero__bg-video { display: none; }
+          .hero__bg-img { display: block; object-position: center bottom 0; }
         }
 
         .hero__gradient {
@@ -784,6 +722,14 @@ export default function Hero() {
           /* 按钮文字稍小,适配 360px 屏 */
           .btn-uv { font-size: 16px; min-width: 130px; }
           .btn-uv span { padding: 14px 18px; font-size: 0.88rem; }
+
+          /* 2026-06-22 招 4 实施:
+             backdrop-filter blur 在 mobile 是 GPU 杀手,关掉
+             半透明底色仍然保留,视觉差异很小,GPU 压力减半 */
+          .hero__stats-glass {
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+          }
         }
       `}</style>
     </section>
