@@ -84,9 +84,75 @@ export default function Projects() {
   // 2026-06-19: Projects 卡片视频改用 IntersectionObserver 按需播放
   // 之前 6 个 video 同时 autoPlay + preload="metadata",在 mobile 上抢带宽,
   // 第一个视频加载慢导致用户看到黑屏/不播。改成进入视口 ≥50% 才 play(),离开 pause()
+  // 2026-06-22: 加视频 watchdog — 检测"该播放却没在播",mobile 上常因 readyState 不足/
+  //   网络抖动/iOS 微信 X5 内核解码失败导致 play() 一次性 reject 后再也起不来
+  //   这里兜底:每 3 秒巡检 + error/stalled 事件即时重试,每个视频最多重试 3 次
   useEffect(() => {
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return
 
+    const cards = document.querySelectorAll('.projects__card--video')
+    const retryCount = new WeakMap()  // 每个 video 的重试次数,避免死循环
+
+    // watchdog 核心:"应该在播却没在播" → 重新 play/load
+    const ensurePlaying = (video) => {
+      if (!video || (retryCount.get(video) || 0) >= 3) return
+
+      // 只检测当前视口内的视频,离开视口的 video.pause() 是 IO 的正常行为
+      const card = video.closest('.projects__card--video')
+      if (!card) return
+      const rect = card.getBoundingClientRect()
+      const inViewport = rect.top < window.innerHeight * 0.6 && rect.bottom > 0
+      if (!inViewport) return
+
+      // ① video.error 不为 null → 重新 load + play
+      if (video.error) {
+        const n = (retryCount.get(video) || 0) + 1
+        retryCount.set(video, n)
+        // eslint-disable-next-line no-console
+        console.warn(`[video-watchdog] error on ${video.src.split('/').pop()}, retry ${n}/3`)
+        video.load()
+        video.play().catch(() => {})
+        return
+      }
+
+      // ② readyState 够了 + paused → 应该播放却停了,重新 play
+      //    readyState: 0=无信息 1=HAVE_METADATA 2=HAVE_CURRENT_DATA 3=HAVE_FUTURE_DATA 4=HAVE_ENOUGH_DATA
+      //    2 表示至少当前帧能播,iOS 经常停在 1 然后 paused,这时 play() 会真的重新触发
+      if (video.readyState >= 2 && video.paused) {
+        const n = (retryCount.get(video) || 0) + 1
+        retryCount.set(video, n)
+        // eslint-disable-next-line no-console
+        console.log(`[video-watchdog] paused but should play: ${video.src.split('/').pop()}, retry ${n}/3`)
+        video.play().catch(() => {})
+      }
+      // ③ readyState < 2(数据不够)且 paused → 不重试,继续等它加载
+    }
+
+    // 事件驱动:出错立即响应,不等 3 秒巡检
+    const attachListeners = (card) => {
+      const video = card.querySelector('video')
+      if (!video) return null
+      const onError = () => ensurePlaying(video)
+      // stalled: 浏览器尝试下载但没数据(mobile 弱网常见)
+      // suspend: 浏览器主动挂起下载(mobile 省电模式常见)
+      const onStalled = () => setTimeout(() => ensurePlaying(video), 800)
+      video.addEventListener('error', onError)
+      video.addEventListener('stalled', onStalled)
+      video.addEventListener('suspend', onStalled)
+      return { video, onError, onStalled }
+    }
+    const bindings = []
+    cards.forEach((card) => {
+      const b = attachListeners(card)
+      if (b) bindings.push(b)
+    })
+
+    // 巡检兜底:每 3 秒扫描一次视口内的 video
+    const intervalId = setInterval(() => {
+      bindings.forEach(({ video }) => ensurePlaying(video))
+    }, 3000)
+
+    // 原有 IntersectionObserver:控制视频的 play/pause 触发点
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -105,10 +171,17 @@ export default function Projects() {
       { threshold: [0, 0.5, 1] }
     )
 
-    const cards = document.querySelectorAll('.projects__card--video')
     cards.forEach((card) => observer.observe(card))
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      clearInterval(intervalId)
+      bindings.forEach(({ video, onError, onStalled }) => {
+        video.removeEventListener('error', onError)
+        video.removeEventListener('stalled', onStalled)
+        video.removeEventListener('suspend', onStalled)
+      })
+    }
   }, [])
 
   return (

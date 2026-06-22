@@ -1,0 +1,1 @@
+{"function":"() => { const v = document.querySelectorAll('.projects__card--video video')[0]; v.pause(); return { manualPaused: v.paused, currentTime: v.currentTime.toFixed(2), src: v.src.split('/').pop() }; }"}

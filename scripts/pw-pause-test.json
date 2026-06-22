@@ -1,0 +1,1 @@
+{"function":"() => { const v = document.querySelector('.projects__card--video video'); if (!v) return 'no video'; v.pause(); v.dataset.watchdogTest = 'manual-paused'; return { paused: v.paused, currentTime: v.currentTime, readyState: v.readyState, src: v.src.split('/').pop() }; }"}

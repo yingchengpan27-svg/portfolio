@@ -1,0 +1,1 @@
+{"function":"() => { const v = document.querySelectorAll('.projects__card--video video')[0]; v.dispatchEvent(new Event('error')); return { dispatched: 'error event on ' + v.src.split('/').pop(), currentTime: v.currentTime.toFixed(2) }; }"}
