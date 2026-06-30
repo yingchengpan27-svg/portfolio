@@ -2,10 +2,11 @@
 
 const navbarData = {
   brand: { icon: 'PY', text: '潘英成' },
-  items: [
+items: [
     { label: '首页', href: '#hero' },
     { label: '关于', href: '#about' },
     { label: '作品', href: '#projects' },
+    { label: '操盘账号', href: '#accounts' },
     { label: '优势', href: '#skills' },
     { label: '联系', href: '#contact' },
   ],

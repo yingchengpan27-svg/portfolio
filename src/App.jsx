@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
+import Accounts from './components/Accounts'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import DynamicBackground from './components/DynamicBackground'
@@ -26,6 +27,7 @@ function App() {
         <DynamicBackground />
         <About />
         <Projects />
+        <Accounts />
         <Skills />
         <Contact />
       </div>
