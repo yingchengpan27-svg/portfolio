@@ -2,20 +2,20 @@
 
 const info = {
   name: '潘英成',
-  title: '新媒体全栈操盘手 / AI 视觉创作者',
+  title: 'AI 视觉创作者 / 新媒体全栈操盘手',
   location: '广东深圳',
   phone: '18621060257',
   email: '1029028010@qq.com',
   education: '上海应用技术大学 · 数字媒体技术 · 本科 · 2017-2021',
   summary: [
-    '5 年短视频全链路运营，覆盖抖音/B站/快手/小红书，从脚本、拍摄剪辑到发布与数据复盘的完整链路执行与优化；',
-    '爆款内容打造能力，具备成熟选题与内容优化方法，参与打造多条自然流爆款视频，最高播放量达400万+；',
-    '商业化与转化链路参与经验，负责账号商业化运营流程，累计推动商业变现及项目收入300万+；',
-    'AIGC内容创作，熟练使用多模态AI工具进行创作与视觉表达优化，提升内容制作效率与表现力。',
+    '精通AIGC多模态创作：熟练运用Midjourney、ComfyUI、Kling等模型，实现"商业创意-AI生成-后期优化"的全流程交付；',
+    '搭建AI视频标准工作流：构建Prompt体系、镜头模板、风格库与角色一致性方案，实现AI内容的流程化与高复用化；',
+    '5年视频操盘与商业变现：深谙受众心理与平台算法，累计创收300万+，单条最高播放1700万+，具备从0到1爆款打造能力；',
+    '技术赋能品牌内容生产：将前沿AI视觉技术与品牌调性深度结合，沉淀结构化创作SOP，高效推动视频商业化落地。',
   ],
   milestones: [
     { year: '2026', label: 'AIGC多模态内容创作', company: '构建AIGC内容生产工作流，实现从"内容预演 → Prompt结构化 → AI生成 → 多轮迭代"的完整链路' },
-    { year: '2025', label: '个人游戏短视频账号独立运营', company: '具备独立从0到1全流程操盘游戏短视频账号的能力，通过爆款策划与算法优化成功涨粉2万+，并沉淀出一套成熟的选号与运营方法论' },
+    { year: '2025', label: '个人游戏短视频账号独立运营', company: '具备独立从0到1全流程操盘游戏短视频账号的能力，通过爆款策划（单条最高播放量1700万+）与算法优化涨粉2万+，并沉淀出一套成熟的选号与运营方法论' },
     { year: '2023', label: '短视频IP运营（医生IP方向）', company: '策划并产出多条百万级爆款视频（单条最高播放量400万+），半年内实现自然涨粉5万+' },
     { year: '2021', label: '自媒体内容全链路运营', company: '1年内实现双账号爆发式涨粉40万+与60万+，独立负责商业合作累计变现超100万' },
   ],
@@ -23,7 +23,7 @@ const info = {
 
 const dataPoints = [
   { num: '300万+', label: 'GMV 累计成交额' },
-  { num: '400万+', label: '单条视频最高播放' },
+  { num: '1700万+', label: '单条视频最高播放' },
   { num: '100万+', label: '累计涨粉' },
   { num: '5年+', label: '内容运营经验' },
 ]
@@ -255,7 +255,7 @@ export default function About() {
           position: absolute;
           inset: -6px;
           border-radius: 50%;
-          border: 2px dashed rgba(99, 102, 241, 0.2);
+          border: 2px dashed rgba(217, 114, 64, 0.2);
           animation: spin 20s linear infinite;
           transition: inset 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
                       border-color 0.4s ease,
@@ -269,10 +269,10 @@ export default function About() {
         /* ============= 头像 hover 动效 ============= */
         .about__avatar-wrap:hover .about__avatar {
           transform: scale(1.07) rotate(3deg);                /* 微放大 + 微旋转 */
-          border-color: rgba(99, 102, 241, 0.75);            /* 边框变紫 */
+          border-color: rgba(217, 114, 64, 0.75);            /* 边框变紫 */
           box-shadow:
-            0 0 30px rgba(99, 102, 241, 0.45),                /* 内层光晕 */
-            0 0 60px rgba(99, 102, 241, 0.2);                 /* 外层扩散 */
+            0 0 30px rgba(217, 114, 64, 0.45),                /* 内层光晕 */
+            0 0 60px rgba(217, 114, 64, 0.2);                 /* 外层扩散 */
           filter: brightness(1.08) saturate(1.15);           /* 提亮 + 加饱和 */
         }
 
@@ -284,7 +284,7 @@ export default function About() {
 
         .about__avatar-wrap:hover .about__avatar-ring {
           inset: -14px;                                       /* 虚线环外扩 */
-          border-color: rgba(99, 102, 241, 0.7);              /* 变亮 */
+          border-color: rgba(217, 114, 64, 0.7);              /* 变亮 */
           border-width: 2.5px;
         }
 
@@ -296,7 +296,7 @@ export default function About() {
           border-radius: 20px;
           background: transparent;
           border: none;
-          box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+          box-shadow: 0 8px 32px rgba(217, 114, 64, 0.15);
         }
 
         .about__name-blob {
@@ -348,7 +348,7 @@ export default function About() {
           flex-direction: column;
           gap: 0.4rem;
           font-size: 0.82rem;
-          color: white;
+          color: var(--text-secondary);
           position: relative;
           z-index: 2;
         }
@@ -369,7 +369,7 @@ export default function About() {
           border: none;
           text-decoration: none;
           cursor: default;               /* 去掉手型光标,看起来不是链接 */
-          box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12);
+          box-shadow: 0 6px 20px rgba(217, 114, 64, 0.12);
         }
 
         .about__contact-blob {
@@ -399,13 +399,13 @@ export default function About() {
           align-items: center;
           gap: 0.7rem;
           padding: 0.8rem 1rem;
-          background: rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
+          background: rgba(255, 248, 236, 0.85);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           border-radius: 12px;
-          outline: 1px solid rgba(255, 255, 255, 0.15);
+          outline: 1px solid rgba(217, 114, 64, 0.30);
           font-size: 0.85rem;
-          color: white;
+          color: var(--text-primary);
           /* 不再 hover 变色,纯展示样式 */
         }
 
@@ -416,10 +416,10 @@ export default function About() {
           align-items: center;
           gap: 0.3rem;
           padding: 0.3rem 0.65rem;
-          background: rgba(99, 102, 241, 0.15);
-          border: 1px solid rgba(99, 102, 241, 0.35);
+          background: rgba(217, 114, 64, 0.15);
+          border: 1px solid rgba(217, 114, 64, 0.35);
           border-radius: 100px;
-          color: #c7d2fe;
+          color: var(--brand-primary-hover);
           font-size: 0.72rem;
           font-family: inherit;
           cursor: pointer;
@@ -430,9 +430,9 @@ export default function About() {
         }
 
         .about__copy-btn:hover {
-          background: rgba(99, 102, 241, 0.28);
-          border-color: rgba(99, 102, 241, 0.55);
-          color: white;
+          background: rgba(217, 114, 64, 0.28);
+          border-color: rgba(217, 114, 64, 0.55);
+          color: var(--brand-primary-hover);
         }
 
         .about__copy-btn:active {
@@ -468,7 +468,7 @@ export default function About() {
           border-radius: 20px;
           background: transparent;
           border: none;
-          box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
+          box-shadow: 0 8px 32px rgba(217, 114, 64, 0.15);
         }
 
         .about__data-card {
@@ -479,7 +479,7 @@ export default function About() {
           background: transparent;
           border: none;
           transition: transform 0.3s ease;
-          box-shadow: 0 6px 20px rgba(99, 102, 241, 0.12);
+          box-shadow: 0 6px 20px rgba(217, 114, 64, 0.12);
         }
 
         /* 内层毛玻璃 .bg — 24px blur,跟 Hero stats 同款 */
@@ -488,12 +488,12 @@ export default function About() {
           position: relative;
           z-index: 1;
           padding: 2rem;
-          /* 2026-06-19: 背景透明度从 0.08 提到 0.2,让里面紫色文字更清晰 (blob 不再干扰阅读) */
-          background: rgba(255, 255, 255, 0.2);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
+          /* 2026-07-02: 暖奶半透明 + 暖橙边,在暖底上看得清 */
+          background: rgba(255, 248, 236, 0.92);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           border-radius: 16px;
-          outline: 1px solid rgba(255, 255, 255, 0.15);
+          outline: 1px solid rgba(217, 114, 64, 0.28);
         }
 
         .about__data-glass {
@@ -501,11 +501,11 @@ export default function About() {
           z-index: 1;
           padding: 1.3rem 1rem;
           text-align: center;
-          background: rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
+          background: rgba(255, 248, 236, 0.85);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           border-radius: 14px;
-          outline: 1px solid rgba(255, 255, 255, 0.15);
+          outline: 1px solid rgba(217, 114, 64, 0.25);
         }
 
         /* 装饰球 .blob — 紫色版,跟 Hero stats 一致 */
@@ -525,18 +525,18 @@ export default function About() {
           animation: about-blob-bounce 7s infinite ease;
         }
 
-        /* 小卡片用小一号的 blob */
+        /* 小卡片用小一号的 blob — 2026-07-02 减弱到 0.25,避免遮挡数字 */
         .about__data-blob {
           position: absolute;
           z-index: 0;
-          top: 50%;
+          top: 65%;             /* 移到卡片下半部,不挡正中央的数字 */
           left: 50%;
-          width: 90px;
-          height: 90px;
+          width: 80px;
+          height: 80px;
           border-radius: 50%;
-          background-color: var(--accent);
-          opacity: 0.45;
-          filter: blur(18px);
+          background-color: var(--brand-accent);
+          opacity: 0.28;
+          filter: blur(16px);
           pointer-events: none;
           animation: about-blob-bounce 6s infinite ease;
           animation-delay: var(--blob-delay, 0s);
@@ -595,22 +595,22 @@ export default function About() {
 
         .about__data-num {
           display: block;
-          font-size: 1.3rem;
-          font-weight: 700;
-          background: var(--gradient-hero);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          font-size: 1.6rem;
+          font-weight: 800;
+          /* 2026-07-02: 改成主题色实色暖橙(原渐变文字在暖底上被三重光晕吃光,看不清) */
+          color: var(--brand-primary);
           margin-bottom: 0.3rem;
           position: relative;
           z-index: 2;
+          letter-spacing: -0.01em;
         }
 
         .about__data-label {
-          font-size: 0.75rem;
-          color: white;
+          font-size: 0.78rem;
+          color: var(--text-secondary);
           position: relative;
           z-index: 2;
+          font-weight: 500;
         }
 
         .about__timeline-item {
@@ -655,10 +655,10 @@ export default function About() {
 
         .about__timeline-company {
           font-size: 0.8rem;
-          /* 2026-06-19 v2: 描述文字改成主体紫色 var(--accent)=#6366f1 */
+          /* 2026-06-19 v2: 描述文字改成主体紫色 var(--accent)=#D97240 */
           color: var(--accent);
           /* 2026-06-19 v3: 主紫色 30% 透明度文字投影,轻微发光效果 */
-          text-shadow: 0 0 6px rgba(99, 102, 241, 0.3);
+          text-shadow: 0 0 6px rgba(217, 114, 64, 0.3);
           white-space: nowrap;
           overflow: visible;
         }
@@ -725,10 +725,12 @@ export default function About() {
             padding: 1rem 0.75rem;
           }
           .about__data-num {
-            font-size: 1.2rem;
+            /* 2026-07-02: 主题色实色,跟桌面端一致 */
+            color: var(--brand-primary);
+            font-size: 1.4rem;
           }
           .about__data-label {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
           }
 
           /* 头像容器在 mobile 略缩小 */

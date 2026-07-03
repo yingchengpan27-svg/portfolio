@@ -10,7 +10,8 @@
       { num: '千万+', label: '爆款播放' },
     ],
     link: 'https://v.douyin.com/T6GVExGyq1U/',
-    gradient: 'linear-gradient(135deg, #fe2c55 0%, #25f4ee 100%)',
+    description: '深耕口腔正畸垂直赛道，通过专业且易懂的科普内容建立极强的信任背书。在操盘期间，团队精准捕捉受众对于牙齿矫正的痛点与焦虑，实现了粉丝的高效精准转化与爆发式增长，是医疗专业人员IP孵化与公域破圈的标杆案例。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fe2c55',
   },
   {
@@ -23,7 +24,8 @@
       { num: '1700万+', label: '单条爆款播放' },
     ],
     link: 'https://v.douyin.com/29sDkIcXrTg/',
-    gradient: 'linear-gradient(135deg, #0a0a0f 0%, #fe2c55 100%)',
+    description: '单条视频斩获 1700万+ 惊人播放量，引爆全网流量。操盘策略侧重于放大内容的"爽点"与话题讨论度，打造出圈爆款。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fe2c55',
   },
   {
@@ -36,7 +38,8 @@
       { num: '100万+', label: '抖音粉丝' },
     ],
     link: 'https://v.douyin.com/l68An8l7yKA/',
-    gradient: 'linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%)',
+    description: '以外教/口语专家的独特视角输出硬核知识，内容兼具高实用性与趣味性。操盘过程中注重人设的立体化打造与高频互动，成功沉淀了大量高粘性、高净值的学习型粉丝人群，具备极强的商业转化壁垒与知识付费潜力。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fe2c55',
   },
   {
@@ -49,7 +52,8 @@
       { num: '400万+', label: '抖音粉丝' },
     ],
     link: 'https://v.douyin.com/YVvdLNljOp4/',
-    gradient: 'linear-gradient(135deg, #16213e 0%, #fe2c55 100%)',
+    description: '以极具幽默感和强网感的内容风格深受大众喜爱。通过精细化的受众分析与热点追踪，团队成功维持了该账号的超高活跃度与长生命周期。在泛娱乐赛道中，该账号已形成极具辨识度的个人IP资产，拥有极高的品牌溢价与广告合作价值。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fe2c55',
   },
   {
@@ -62,7 +66,8 @@
       { num: '100万+', label: 'B站粉丝' },
     ],
     link: 'https://space.bilibili.com/24801003?spm_id_from=333.1387.follow.user_card.click',
-    gradient: 'linear-gradient(135deg, #fb7299 0%, #1a1a2e 100%)',
+    description: '针对B站中长视频生态进行内容的深度定制。相比短视频平台，该账号的B站运营更侧重于知识密度的提升与社区文化的融入。通过高质量的干货输出，成功打透年轻世代学习群体，实现了全平台IP影响力的共振与私域资产的沉淀。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fb7299',
   },
   {
@@ -75,7 +80,8 @@
       { num: '100万+', label: 'B站粉丝' },
     ],
     link: 'https://space.bilibili.com/85835398?spm_id_from=333.1387.follow.user_card.click',
-    gradient: 'linear-gradient(135deg, #fb7299 0%, #2d1b69 100%)',
+    description: '精准契合B站生活区的社区调性，通过充满烟火气与趣味性的吃播/探店/生活日常，与粉丝建立了极具陪伴感的情感连接。操盘的重点在于弹幕文化的引导与粉丝群体的深度互动，造就了极高的粉丝活跃率与忠诚度。',
+    gradient: 'linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-primary-hover) 100%)',
     accentColor: '#fb7299',
   },
 ]
@@ -137,6 +143,7 @@ export default function Accounts() {
                       </div>
                     ))}
                   </div>
+                  <p className="account-card__description">{a.description}</p>
                 </div>
 
                 <div className="account-card__bottom-bottom">
@@ -208,13 +215,13 @@ export default function Accounts() {
           bottom: 3px;
           left: 3px;
           right: 3px;
-          background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 50%);
+          background: var(--bg-primary);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           top: 65%;
           border-radius: 21px;
           z-index: 2;
-          box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 5px 0px inset;
+          box-shadow: 0 8px 24px rgba(217, 114, 64, 0.18);
           overflow: hidden;
           transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
           /* flex column 让 content 在上、bottom-bottom 始终推到底部 */
@@ -231,14 +238,14 @@ export default function Accounts() {
         .account-card__name {
           display: block;
           font-size: 1.15rem;
-          color: white;
+          color: #1A1A2E;
           font-weight: 700;
           line-height: 1.3;
         }
         .account-card__about {
           display: block;
           font-size: 0.85rem;
-          color: rgba(255, 255, 255, 0.85);
+          color: #4A4A5A;
           margin-top: 0.6rem;
           line-height: 1.4;
         }
@@ -256,14 +263,33 @@ export default function Accounts() {
           display: block;
           font-size: 1rem;
           font-weight: 700;
-          color: white;
+          color: #D97240;
           line-height: 1.1;
         }
         .account-card__stat-label {
           display: block;
           font-size: 0.7rem;
-          color: rgba(255, 255, 255, 0.6);
+          color: #4A4A5A;
           margin-top: 0.15rem;
+        }
+
+        /* 详细描述(悬浮时显示在数据下方) */
+        .account-card__description {
+          font-size: 0.78rem;
+          line-height: 1.55;
+          color: var(--text-secondary);
+          margin-top: 0;
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          transform: translateY(8px);
+          transition: max-height 0.45s ease-in-out 0.15s, opacity 0.35s ease-in-out 0.2s, margin-top 0.45s ease-in-out 0.15s, transform 0.4s ease-in-out 0.2s;
+        }
+        .account-card:hover .account-card__description {
+          max-height: 180px;
+          opacity: 1;
+          margin-top: 0.75rem;
+          transform: translateY(0);
         }
 
         /* 底部固定行:平台徽章 + 跳转按钮(margin-top:auto 推到底部,与 content 不重叠) */
@@ -280,17 +306,17 @@ export default function Accounts() {
           align-items: center;
           gap: 0.4rem;
           padding: 0.35rem 0.85rem;
-          background: rgba(255, 255, 255, 0.15);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          background: rgba(217, 114, 64, 0.12);
+          border: 1px solid rgba(217, 114, 64, 0.3);
           border-radius: 100px;
           font-size: 0.72rem;
           font-family: var(--font-mono);
           letter-spacing: 0.05em;
-          color: white;
+          color: #D97240;
         }
         .account-card__button {
           background: white;
-          color: var(--accent);
+          color: var(--brand-primary);
           border: none;
           border-radius: 20px;
           font-size: 0.7rem;
@@ -302,17 +328,39 @@ export default function Accounts() {
         /* ===== Hover 效果(仅支持鼠标的设备触发,移动端 tap 不会变形) ===== */
         @media (hover: hover) and (pointer: fine) {
           .account-card:hover .account-card__button {
-            background: var(--accent);
+            background: var(--brand-primary);
             color: white;
           }
 
           .account-card:hover {
+            background: var(--brand-primary);
             border-top-left-radius: 55px;
           }
           .account-card:hover .account-card__bottom {
-            top: 20%;
+            top: 22%;
             border-radius: 50px 21px 21px 21px;
+            background: var(--bg-primary);
+            box-shadow: 0 8px 24px rgba(217, 114, 64, 0.18);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.2s;
+          }
+          .account-card:hover .account-card__name {
+            color: var(--text-primary);
+          }
+          .account-card:hover .account-card__about {
+            color: var(--text-secondary);
+          }
+          .account-card:hover .account-card__stat-num {
+            color: var(--brand-primary);
+          }
+          .account-card:hover .account-card__stat-label {
+            color: var(--text-secondary);
+          }
+          .account-card:hover .account-card__platform {
+            background: rgba(217, 114, 64, 0.12);
+            border-color: rgba(217, 114, 64, 0.3);
+            color: var(--brand-primary);
           }
           .account-card:hover .account-card__pic {
             width: 90px;
@@ -370,6 +418,10 @@ export default function Accounts() {
             padding: 1.1rem;
             border-radius: 20px;
             border-top-left-radius: 35px;  /* 模拟 desktop hover 的左上圆角 */
+            /* 2026-07-03: mobile 卡片底色改主题背景 + 加暖橙边框
+               之前沿用 var(--card-bg) 暖橙渐变,跟 stats 数字 / 平台徽章同色,对比度差 */
+            background: var(--bg-primary);
+            border: 1.5px solid var(--brand-primary);
           }
           /* 头像:90×90 圆 + 白边 + 永久 hover 缩放效果 */
           .account-card__pic {

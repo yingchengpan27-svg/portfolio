@@ -1,13 +1,14 @@
 ﻿import { useState, useEffect } from 'react'
 
 const navbarData = {
-  brand: { icon: 'PY', text: '潘英成' },
-items: [
+  // 2026-07-03: logo 字母从 'PY' 改成 'Y'(潘英 / Ying 简称)
+  brand: { icon: 'Y', text: '潘英成' },
+  items: [
     { label: '首页', href: '#hero' },
     { label: '关于', href: '#about' },
     { label: '作品', href: '#projects' },
     { label: '操盘账号', href: '#accounts' },
-    { label: '优势', href: '#skills' },
+    // 2026-07-02: '优势' / #skills 菜单项删除(Skills 区被用户去掉,标题是"核心优势")
     { label: '联系', href: '#contact' },
   ],
   cta: { label: '联系我', href: '#contact' },
@@ -82,13 +83,22 @@ export default function Navbar() {
           z-index: 1000;
           padding: 1.2rem 0;
           transition: all 0.4s var(--ease-out);
+          /* 2026-07-02: 入场动画用 CSS keyframes,避免 GSAP 在 React StrictMode 下卡 opacity:0
+             (从 useGsapAnimations 移过来,见 §5.5 同类坑) */
+          animation: nav-enter 0.9s var(--ease-out) 0.1s both;
+        }
+
+        @keyframes nav-enter {
+          from { transform: translateY(-60px); opacity: 0; }
+          to   { transform: translateY(0);     opacity: 1; }
         }
 
         .nav--scrolled {
-          background: rgba(10, 10, 15, 0.85);
+          /* 2026-07-02: 改成跟网站背景色一致(暖奶),从深色改暖底 */
+          background: rgba(254, 252, 246, 0.92);
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
-          border-bottom: 1px solid var(--border);
+          border-bottom: 1px solid rgba(217, 114, 64, 0.20);
           padding: 0.8rem 0;
         }
 
@@ -111,14 +121,16 @@ export default function Navbar() {
           width: 36px;
           height: 36px;
           border-radius: 10px;
-          background: var(--gradient-hero);
+          /* 2026-07-03: 底色改成主题色实色暖橙(原用 gradient-hero 渐变,改成实色更克制) */
+          background: var(--brand-primary);
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.75rem;
-          font-weight: 700;
-          color: #fff;
-          letter-spacing: 0.05em;
+          font-size: 0.95rem;
+          font-weight: 800;
+          color: #fefcf6;
+          letter-spacing: 0;
+          box-shadow: 0 4px 14px rgba(217, 114, 64, 0.30);
         }
 
         .nav__links {
@@ -184,11 +196,7 @@ export default function Navbar() {
         }
 
         @media (max-width: 768px) {
-          /* 2026-06-19: mobile 端去掉"优势"菜单项,desktop 端保留
-             用属性选择器匹配 href="#skills",不修改 JSX */
-          .nav__link[href="#skills"] {
-            display: none;
-          }
+          /* 2026-07-02: "优势"菜单项已从 items 数组删除,这条 mobile display:none 规则不再需要 */
           /* mobile 菜单改成右上角小卡片下拉 (2026-06-19)
              之前是 position:fixed 全屏菜单,改成 absolute + 小卡片浮在 burger 按钮下方 */
           .nav__links {
@@ -227,7 +235,7 @@ export default function Navbar() {
           }
 
           .nav__link:hover {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(217, 114, 64, 0.15);
           }
 
           .nav__cta { display: none; }

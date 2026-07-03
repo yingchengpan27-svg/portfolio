@@ -15,11 +15,11 @@ export default function DynamicBackground() {
       <svg className="ribbon ribbon--1" viewBox="0 0 2000 600" preserveAspectRatio="none">
         <defs>
           <linearGradient id="ribbonGrad1" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="rgba(59,130,246,0)" />
-            <stop offset="0.3" stopColor="rgba(59,130,246,0.55)" />
+            <stop offset="0" stopColor="rgba(217, 114, 64,0)" />
+            <stop offset="0.3" stopColor="rgba(217, 114, 64,0.55)" />
             <stop offset="0.5" stopColor="rgba(147,197,253,0.85)" />
-            <stop offset="0.7" stopColor="rgba(59,130,246,0.55)" />
-            <stop offset="1" stopColor="rgba(59,130,246,0)" />
+            <stop offset="0.7" stopColor="rgba(217, 114, 64,0.55)" />
+            <stop offset="1" stopColor="rgba(217, 114, 64,0)" />
           </linearGradient>
         </defs>
         <path
@@ -53,11 +53,11 @@ export default function DynamicBackground() {
       <svg className="ribbon ribbon--3" viewBox="0 0 2000 600" preserveAspectRatio="none">
         <defs>
           <linearGradient id="ribbonGrad3" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="rgba(96,165,250,0)" />
-            <stop offset="0.3" stopColor="rgba(96,165,250,0.5)" />
-            <stop offset="0.5" stopColor="rgba(59,130,246,0.8)" />
-            <stop offset="0.7" stopColor="rgba(96,165,250,0.5)" />
-            <stop offset="1" stopColor="rgba(96,165,250,0)" />
+            <stop offset="0" stopColor="rgba(251, 233, 216,0)" />
+            <stop offset="0.3" stopColor="rgba(251, 233, 216,0.5)" />
+            <stop offset="0.5" stopColor="rgba(217, 114, 64,0.8)" />
+            <stop offset="0.7" stopColor="rgba(251, 233, 216,0.5)" />
+            <stop offset="1" stopColor="rgba(251, 233, 216,0)" />
           </linearGradient>
         </defs>
         <path
@@ -98,7 +98,7 @@ export default function DynamicBackground() {
           overflow: hidden;
           pointer-events: none;
           z-index: 0;
-          background: #03060f;
+          background: #fefcf6;
           /* 2026-06-19: contain: paint 隔离渲染,减少对外部 layout 重排的影响 */
           contain: paint;
         }
@@ -123,7 +123,7 @@ export default function DynamicBackground() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.10), transparent 55%),
+            radial-gradient(ellipse at 30% 20%, rgba(217, 114, 64, 0.10), transparent 55%),
             radial-gradient(ellipse at 70% 75%, rgba(249, 115, 22, 0.08), transparent 55%);
         }
 
@@ -137,19 +137,19 @@ export default function DynamicBackground() {
 
         .stream--blue-1 {
           width: 580px; height: 580px;
-          background: radial-gradient(circle, rgba(59, 130, 246, 0.55), transparent 65%);
+          background: radial-gradient(circle, rgba(217, 114, 64, 0.55), transparent 65%);
           top: 5%; left: -8%;
           animation: drift-a 18s ease-in-out infinite;
         }
         .stream--blue-2 {
           width: 480px; height: 480px;
-          background: radial-gradient(circle, rgba(96, 165, 250, 0.45), transparent 65%);
+          background: radial-gradient(circle, rgba(251, 233, 216, 0.45), transparent 65%);
           top: 48%; left: 55%;
           animation: drift-b 22s ease-in-out infinite;
         }
         .stream--blue-3 {
           width: 700px; height: 700px;
-          background: radial-gradient(circle, rgba(37, 99, 235, 0.38), transparent 65%);
+          background: radial-gradient(circle, rgba(217, 114, 64, 0.38), transparent 65%);
           top: -8%; left: 50%;
           animation: drift-c 26s ease-in-out infinite;
         }

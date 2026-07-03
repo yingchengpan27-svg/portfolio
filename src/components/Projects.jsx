@@ -7,7 +7,7 @@ const projects = [
     category: 'AI 视觉创作',
     desc: '运用前沿多模态AI工作流，独立制作Apple极简高科技感产品宣传片，解决AI视频画面一致性与物理阴影过渡等技术痛点。',
     tags: ['AI视频', '多模态', '产品宣传'],
-    gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+    gradient: 'linear-gradient(135deg, #faf6eb 0%, #fff3d9 50%, #FBE9D8 100%)',
     icon: '🎬',
     video: '/mic-apple-ad.mp4',
     link: 'https://www.xinpianchang.com/a13721954?from=webShare&channel=copyLink',
@@ -16,39 +16,39 @@ const projects = [
   },
   {
     id: 2,
-    title: '「你的名字」超写实动漫转真人预告片',
+    title: 'ZURU Fuggler 爆款内容复刻',
     category: 'AI 视觉创作',
-    desc: '深入精通提示词工程，实现动漫角色到超写实真人的视觉转换，精准控制皮肤写实材质与光影效果。',
+    desc: '主导ZURU品牌产品的AI视觉营销内容创作，通过"产品调性×用户喜好"的深度挖掘与内容重构，打造兼具品牌感知与高传播力的爆款AI视频。',
     tags: ['AI视频', '写实渲染', '动漫转真人'],
-    gradient: 'linear-gradient(135deg, #2d1b69 0%, #11998e 100%)',
+    gradient: 'linear-gradient(135deg, #F4D758 0%, #D97240 100%)',
     icon: '✨',
-    video: '/your-name-trailer.mp4',
-    link: 'https://www.xinpianchang.com/a13721952?from=webShare&channel=copyLink',
+    video: '/ZURU Fuggler.mp4',
+    link: 'https://v.douyin.com/nLAurIMyiC0/',
     row: '1',
   },
   {
     id: 6,
-    title: '影石360产品TVC广告',
+    title: 'Bunch O Balloons TVC广告',
     category: 'AI 视觉创作',
-    desc: '独立完成影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
+    desc: '独立完成海外品牌 ZURU「Bunch O Balloons」AI商业广告从0-1创作，输出60秒TVC级广告内容，验证AI驱动商业广告全流程生产能力。',
     tags: ['AI视频', '多模态', '产品宣传'],
-    gradient: 'linear-gradient(135deg, #0a0a0f 0%, #6366f1 100%)',
+    gradient: 'linear-gradient(135deg, #faf6eb 0%, #D97240 100%)',
     icon: '💻',
-    video: '/insta360-x3.mp4',
-    link: 'https://www.xinpianchang.com/a13721953?from=webShare&channel=copyLink',
+    video: '/BunchOBalloons.mp4',
+    link: 'https://www.xinpianchang.com/a13738261?from=webShare&channel=copyLink',
     col: '3',
     row: '2',
   },
   {
     id: 5,
-    title: '个人游戏短视频账号',
-    category: '独立运营',
-    desc: '独立操盘游戏垂类账号，跑通全生命周期工作流，从0到1冷启动，累计粉丝2万+，沉淀成熟起号方法论。',
+    title: '影石360产品TVC广告',
+    category: 'AI 视觉创作',
+    desc: '独立完成影石Insta360概念联名TVC的全链路AI创作，运用先进生成式AI工作流，高效产出涵盖多场景实感模拟的电影级商业视觉。',
     tags: ['游戏', '冷启动', '全链路'],
-    gradient: 'linear-gradient(135deg, #0a0a0f 0%, #1b4332 50%, #2d6a4f 100%)',
-    icon: '🎮',
-    video: '/game-account.mp4',
-    link: 'https://www.douyin.com/user/MS4wLjABAAAA_sl0CSZ2h2nW1HUt438aVHJuKynhrYxaBm0yfjcTI9M',
+    gradient: 'linear-gradient(135deg, #faf6eb 0%, #FBE9D8 50%, #D97240 100%)',
+    icon: '💻',
+    video: '/insta360-x3.mp4',
+    link: 'https://www.xinpianchang.com/a13721953?from=webShare&channel=copyLink',
     col: '1',
     row: '3',
   },
@@ -58,23 +58,23 @@ const projects = [
     category: '短视频IP运营',
     desc: '全链路负责医生IP运营，策划多条百万级爆款视频，半年自然涨粉5万+，推动账号累计GMV超200万。',
     tags: ['抖音', 'IP运营', '百万GMV'],
-    gradient: 'linear-gradient(135deg, #0c0c1d 0%, #1a0a2e 50%, #2d1b69 100%)',
+    gradient: 'linear-gradient(135deg, #fefcf6 0%, #FBE9D8 50%, #D97240 100%)',
     icon: '🏥',
     video: '/doctor-ip.mp4',
-    link: 'https://www.douyin.com/user/MS4wLjABAAAAPUXtFBXK-KW0Z0hBU6Ck61Zg2LoiVc_1ptMomIRBHs9YevtzJnUxqFiij2MUdi6w',
+    link: 'https://v.douyin.com/7O2UxYhhawM/',
     col: '2',
     row: '3',
   },
   {
     id: 4,
-    title: 'B站达人账号运营',
-    category: '内容全链路运营',
-    desc: '负责「口语老炮儿马思瑞」「夏波波Brian」选题策划与全渠道运营，1年助力两大账号涨粉40万+与60万+。',
+    title: '「你的名字」超写实动漫转真人预告片',
+    category: 'AI 视觉创作',
+    desc: '深入精通提示词工程，实现动漫角色到超写实真人的视觉转换，精准控制皮肤写实材质与光影效果。',
     tags: ['B站', '涨粉100万+', '商业变现'],
-    gradient: 'linear-gradient(135deg, #1a1a2e 0%, #e94560 100%)',
-    icon: '📺',
-    video: '/bzhan-english.mp4',
-    link: 'https://space.bilibili.com/24801003',
+    gradient: 'linear-gradient(135deg, #F4D758 0%, #D97240 100%)',
+    icon: '✨',
+    video: '/your-name-trailer.mp4',
+    link: 'https://v.douyin.com/w3nOkizPOEI/',
     col: '3',
     row: '3',
   },
@@ -274,7 +274,7 @@ export default function Projects() {
         }
 
         .projects__card:hover {
-          border-color: rgba(99, 102, 241, 0.3);
+          border-color: rgba(217, 114, 64, 0.3);
           transform: translateY(-4px);
           box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
@@ -325,7 +325,7 @@ export default function Projects() {
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: var(--accent-hover);
-          background: rgba(99, 102, 241, 0.15);
+          background: rgba(217, 114, 64, 0.15);
           padding: 0.3rem 0.8rem;
           border-radius: 100px;
           position: relative;
@@ -356,6 +356,8 @@ export default function Projects() {
           font-weight: 600;
           margin-bottom: 0.6rem;
           line-height: 1.4;
+          /* 2026-07-02: body 是深色渐变背景,字色必须浅色 */
+          color: #fefcf6;
         }
 
         .projects__card--featured .projects__card-title {
@@ -364,7 +366,8 @@ export default function Projects() {
 
         .projects__card-desc {
           font-size: 0.85rem;
-          color: var(--text-secondary);
+          /* 2026-07-02: body 深色背景,描述用半透明奶色(不用 --text-secondary 深灰) */
+          color: rgba(254, 252, 246, 0.78);
           line-height: 1.7;
           flex: 1;
         }
@@ -428,7 +431,7 @@ export default function Projects() {
         }
 
         .projects__card--linked:hover .projects__card-link-icon {
-          background: rgba(99, 102, 241, 0.9);
+          background: rgba(217, 114, 64, 0.9);
           border-color: rgba(255, 255, 255, 0.4);
           transform: scale(1.1) rotate(-5deg);
         }

@@ -1,46 +1,93 @@
 ﻿/* ============================================
    潘英成 — 个人作品集网站
-   设计系统：暗色 / 科技感 / 克制 / 高级
+   设计系统:暖橙派 · 暖底 · 有人情味
+   来源:../esther-design-system-main/brand-dna.md
+   最后更新:2026-07-02
    ============================================ */
 
 :root {
-  /* ── 色彩系统 ── */
-  --bg-primary:     #0a0a0f;
-  --bg-secondary:   #111118;
-  --bg-card:        #16161f;
-  --bg-card-hover:  #1c1c28;
-  --border:         rgba(255, 255, 255, 0.06);
-  --border-hover:   rgba(255, 255, 255, 0.12);
+  /* ── 三色品牌系统(60% / 30% / 10%) ── */
+  --brand-primary:        #D97240;     /* 暖橙 · 主色 60% */
+  --brand-primary-hover:  #C5632F;     /* 深橙 · hover */
+  --brand-primary-soft:   #FBE9D8;     /* 浅橙 · 装饰底色 */
+  --brand-primary-glow:   rgba(217, 114, 64, 0.18);
+  --brand-primary-subtle: rgba(217, 114, 64, 0.08);
 
-  --text-primary:   #f0f0f5;
-  --text-secondary: #8a8a9a;
-  --text-muted:     #5a5a6a;
+  --brand-accent:         #F4D758;     /* 米黄 · 强调 30% */
+  --brand-accent-soft:    #FFF6D9;     /* 浅米黄 · 高亮区 */
+  --brand-accent-hover:   #E8C544;     /* 深米黄 · hover */
 
-  --accent:         #6366f1;
-  --accent-hover:   #818cf8;
-  --accent-glow:    rgba(99, 102, 241, 0.15);
-  --accent-subtle:  rgba(99, 102, 241, 0.08);
+  --brand-pop:            #A33A2A;     /* 砖红 · 点缀 10% */
+  --brand-pop-hover:      #8A2F22;     /* 深砖红 · hover */
 
-  --gradient-hero:  linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
-  --gradient-card:  linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(139,92,246,0.05) 100%);
+  /* ── 暖底基底(主用) ── */
+  --bg-primary:           #fefcf6;     /* 暖奶白 · 主背景 */
+  --bg-secondary:         #faf6eb;     /* 深奶 · 次背景 */
+  --bg-card:              #fff8ec;     /* 卡片底色 */
+  --bg-card-hover:        #fff3d9;     /* 卡片 hover */
+  --bg-muted:             #f3eedd;     /* 静音底色 */
 
-  /* ── 字体 ── */
-  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', monospace;
+  --border:               rgba(217, 114, 64, 0.12);
+  --border-hover:         rgba(217, 114, 64, 0.28);
+  --border-strong:        rgba(26, 26, 46, 0.10);
 
-  /* ── 间距 ── */
-  --container:      1700px;
-  --container-pad:  clamp(1.5rem, 4vw, 4rem);
+  /* ── 文字(墨色,非纯黑) ── */
+  --text-primary:         #1A1A2E;     /* 墨色 · 主 */
+  --text-secondary:       #4A4A5A;     /* 次要 */
+  --text-muted:           #888;        /* 辅助 */
 
-  /* ── 圆角 ── */
-  --radius-sm:  8px;
-  --radius-md:  12px;
-  --radius-lg:  20px;
-  --radius-xl:  28px;
+  /* ── 暗底(慎用,仅 Hero / 强调区) ── */
+  --bg-dark:              #151821;
+  --bg-dark-deep:         #0d1117;
+  --text-on-dark:         #fefcf6;
 
-  /* ── 动画 ── */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* ── 渐变(替换蓝紫渐变 → 暖橙径向) ── */
+  --gradient-warm:        radial-gradient(ellipse at 30% 0%, rgba(244, 215, 88, 0.35) 0%, transparent 60%),
+                          radial-gradient(ellipse at 70% 100%, rgba(217, 114, 64, 0.18) 0%, transparent 50%);
+  --gradient-hero-bg:     radial-gradient(circle at 20% 30%, rgba(244, 215, 88, 0.25) 0%, transparent 50%),
+                          radial-gradient(circle at 80% 70%, rgba(217, 114, 64, 0.15) 0%, transparent 50%);
+  --gradient-card-warm:   linear-gradient(135deg, rgba(244, 215, 88, 0.20) 0%, rgba(217, 114, 64, 0.08) 100%);
+
+  /* ── 字体(去掉 Inter,改用 Noto Serif + Noto Sans) ── */
+  --font-display:         'Fraunces', 'Noto Serif SC', 'Source Han Serif SC', '汇文明朝体', serif;
+  --font-sans:            'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono:            'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  --font-hand:            'Caveat', 'Kalam', cursive;
+
+  /* ── 间距(沿用 skill 推荐,clamp 流体) ── */
+  --container:            1300px;
+  --container-pad:        clamp(1.5rem, 4vw, 4rem);
+  --section-pad:          clamp(80px, 12vh, 160px);
+  --block-gap:            clamp(40px, 6vw, 100px);
+  --card-pad:             clamp(28px, 3vw, 44px);
+  --gap:                  clamp(24px, 3vw, 48px);
+
+  /* ── 圆角(克制一点,告别 AI 风) ── */
+  --radius-sm:            6px;
+  --radius-md:            10px;
+  --radius-lg:            16px;
+  --radius-xl:            24px;
+
+  /* ── 阴影(暖橙基调,告别冷灰蓝阴影) ── */
+  --shadow-sm:            0 1px 2px rgba(217, 114, 64, 0.08);
+  --shadow-md:            0 6px 20px rgba(217, 114, 64, 0.10);
+  --shadow-lg:            0 12px 40px rgba(217, 114, 64, 0.14);
+  --shadow-warm:          0 10px 30px rgba(163, 58, 42, 0.10);
+
+  /* ── 动画(沿用,无 bounce/elastic) ── */
+  --ease-out:             cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:          cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── 旧变量名 alias (向后兼容现有组件代码) ── */
+  /* 组件内仍引用 --accent / --accent-hover / --accent-glow / --accent-subtle / --gradient-hero / --gradient-card,
+     这些别名指向暖橙派新变量,避免组件失联。
+     未来清理时把组件里的旧名换成新名,再删掉这块 alias。 */
+  --accent:         var(--brand-primary);
+  --accent-hover:   var(--brand-primary-hover);
+  --accent-glow:    var(--brand-primary-glow);
+  --accent-subtle:  var(--brand-primary-subtle);
+  --gradient-hero:  var(--gradient-warm);
+  --gradient-card:  var(--gradient-card-warm);
 }
 
 /* ── Reset ── */
@@ -55,8 +102,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* 关键:html 也加 overflow-x 保险,某些情况下 body 单独设置不够
-     防止 mobile 横向溢出产生白边/可滚动 */
+  /* 关键:html 也加 overflow-x 保险,防止 mobile 横向溢出产生白边 */
   overflow-x: hidden;
 }
 
@@ -73,6 +119,12 @@ body {
      ============================================================ */
   word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+/* 选中文字高亮:暖橙底 + 墨色字 */
+::selection {
+  background: var(--brand-primary);
+  color: var(--text-on-dark);
 }
 
 /* ── 动态背景区(非 Hero 区域) ── */
@@ -104,7 +156,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 
 /* ── Section 通用 ── */
 .section {
-  padding: 6rem 0;
+  padding: var(--section-pad) 0;
   position: relative;
 }
 
@@ -113,7 +165,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--brand-primary);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -124,15 +176,17 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
   content: '';
   width: 24px;
   height: 1px;
-  background: var(--accent);
+  background: var(--brand-primary);
 }
 
 .section-title {
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   margin-bottom: 1rem;
+  color: var(--text-primary);
 }
 
 .section-desc {
@@ -156,14 +210,14 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: var(--brand-primary);
   color: #fff;
-  box-shadow: 0 0 20px var(--accent-glow);
+  box-shadow: var(--shadow-warm);
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
-  box-shadow: 0 0 30px var(--accent-glow);
+  background: var(--brand-primary-hover);
+  box-shadow: 0 12px 40px rgba(217, 114, 64, 0.28);
   transform: translateY(-1px);
 }
 
@@ -174,9 +228,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
 }
 
 .btn-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-subtle);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  background: var(--brand-primary-subtle);
 }
 
 /* ── 动画 ── */
@@ -217,26 +271,101 @@ button { font: inherit; cursor: pointer; border: none; background: none; }
     font-size: clamp(1.6rem, 6vw, 2.2rem);
   }
 }
-.vis-editor-toggle{position:fixed;right:20px;bottom:20px;z-index:9999;background:rgba(99,102,241,.9);color:#fff;padding:.65rem 1rem;border-radius:999px;border:none;font-size:.85rem;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.3)}
-.vis-editor-overlay{position:fixed;inset:0;z-index:10000;background:rgba(10,10,15,.98);overflow:auto;padding:20px}
-.vis-editor-panel{max-width:1100px;margin:0 auto;color:#e5e7eb;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans SC,sans-serif}
-.vis-editor-title{font-size:24px;font-weight:700;margin-bottom:10px}
-.vis-editor-section{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:16px}
-.vis-editor-section h3{font-size:16px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.vis-editor-field{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:start;margin-bottom:10px}
-.vis-editor-field label{font-size:12px;color:#a1a1aa;padding-top:8px}
-.vis-editor-field input,.vis-editor-field textarea{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#f4f4f5;border-radius:10px;padding:10px 12px;font-size:14px;width:100%}
-.vis-editor-field textarea{min-height:110px}
-.vis-editor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.vis-editor-actions{display:flex;gap:10px;margin-top:8px}
-.vis-editor-btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;cursor:pointer}
-.vis-editor-btn.primary{background:rgba(99,102,241,.9);border-color:transparent}
-.vis-editor-msg{font-size:13px;color:#a1a1aa;margin-left:8px}
-.vis-editor-table{width:100%;border-collapse:collapse;margin-top:10px}
-.vis-editor-table th,.vis-editor-table td{border:1px solid rgba(255,255,255,.08);padding:8px;font-size:13px}
-.vis-editor-table th{text-align:left;color:#a1a1aa;background:rgba(255,255,255,.03)}
-.vis-editor-table td input{width:100%}
-.vis-editor-table .row-actions{white-space:nowrap;display:flex;gap:6px}
-.vis-editor-table .row-actions button{padding:6px 8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#fff;border-radius:8px;cursor:pointer;font-size:12px}
-.vis-editor-close{position:absolute;top:16px;right:20px;background:transparent;border:none;color:#fff;font-size:18px;cursor:pointer}
-@media(max-width:900px){.vis-editor-field{grid-template-columns:1fr}.vis-editor-grid{grid-template-columns:1fr}}
+
+/* ── 可视化编辑器(保留工具,变量化) ── */
+.vis-editor-toggle {
+  position: fixed; right: 20px; bottom: 20px; z-index: 9999;
+  background: var(--brand-primary); color: #fff;
+  padding: .65rem 1rem; border-radius: 999px; border: none;
+  font-size: .85rem; cursor: pointer;
+  box-shadow: var(--shadow-warm);
+}
+.vis-editor-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(254, 252, 246, 0.98);
+  overflow: auto; padding: 20px;
+}
+.vis-editor-panel {
+  max-width: 1100px; margin: 0 auto;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+.vis-editor-title {
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 700; margin-bottom: 10px;
+}
+.vis-editor-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; margin-bottom: 16px;
+}
+.vis-editor-section h3 {
+  font-size: 16px; font-weight: 600; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.vis-editor-field {
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 10px; align-items: start; margin-bottom: 10px;
+}
+.vis-editor-field label {
+  font-size: 12px; color: var(--text-secondary); padding-top: 8px;
+}
+.vis-editor-field input,
+.vis-editor-field textarea {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-hover);
+  color: var(--text-primary);
+  border-radius: 10px; padding: 10px 12px;
+  font-size: 14px; width: 100%;
+}
+.vis-editor-field textarea { min-height: 110px; }
+.vis-editor-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.vis-editor-actions {
+  display: flex; gap: 10px; margin-top: 8px;
+}
+.vis-editor-btn {
+  padding: 10px 14px; border-radius: 10px;
+  border: 1px solid var(--border-hover);
+  background: var(--bg-card); color: var(--text-primary);
+  cursor: pointer;
+}
+.vis-editor-btn.primary {
+  background: var(--brand-primary);
+  border-color: transparent; color: #fff;
+}
+.vis-editor-msg {
+  font-size: 13px; color: var(--text-secondary); margin-left: 8px;
+}
+.vis-editor-table {
+  width: 100%; border-collapse: collapse; margin-top: 10px;
+}
+.vis-editor-table th,
+.vis-editor-table td {
+  border: 1px solid var(--border);
+  padding: 8px; font-size: 13px;
+}
+.vis-editor-table th {
+  text-align: left; color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+.vis-editor-table td input { width: 100%; }
+.vis-editor-table .row-actions {
+  white-space: nowrap; display: flex; gap: 6px;
+}
+.vis-editor-table .row-actions button {
+  padding: 6px 8px; border: 1px solid var(--border-hover);
+  background: var(--bg-card); color: var(--text-primary);
+  border-radius: 8px; cursor: pointer; font-size: 12px;
+}
+.vis-editor-close {
+  position: absolute; top: 16px; right: 20px;
+  background: transparent; border: none;
+  color: var(--text-primary); font-size: 18px; cursor: pointer;
+}
+@media(max-width:900px) {
+  .vis-editor-field { grid-template-columns: 1fr; }
+  .vis-editor-grid { grid-template-columns: 1fr; }
+}

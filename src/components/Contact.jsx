@@ -156,7 +156,7 @@ export default function Contact() {
           height: 500px;
           top: 10%;
           left: 10%;
-          background: radial-gradient(circle, rgba(255,153,102,0.18), transparent 70%);
+          background: radial-gradient(circle, rgba(217, 114, 64,0.18), transparent 70%);
         }
 
         .contact__glow--2 {
@@ -181,7 +181,7 @@ export default function Contact() {
           font-weight: 800;
           letter-spacing: -0.03em;
           margin-bottom: 1rem;
-          background: linear-gradient(135deg, #ff9966 0%, #ffbb88 50%, #ffaa77 100%);
+          background: linear-gradient(135deg, #D97240 0%, #FBE9D8 50%, #F4B860 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -189,18 +189,19 @@ export default function Contact() {
 
         /* 把 GET IN TOUCH 标签和 ::before 装饰线改成橙色 */
         .contact .section-label {
-          color: #ff9966;
+          color: #D97240;
         }
 
         .contact .section-label::before {
-          background: #ff9966;
+          background: #D97240;
         }
 
         .contact__subtitle {
           font-size: 1.1rem;
-          color: #ffffff;
+          color: var(--text-secondary);
           line-height: 1.8;
           margin-bottom: 3rem;
+          max-width: 540px;
         }
 
         .contact__cards {
@@ -215,16 +216,17 @@ export default function Contact() {
           min-height: 220px;
         }
 
+        /* 2026-07-02: 卡片改用暖奶半透明 + 暖橙边,在暖底上看得清 */
         .contact__card {
           position: relative;
           width: 200px;
           height: 200px;
           padding: 2rem 1.5rem;
-          background: linear-gradient(rgba(255, 255, 255, 0.13), transparent);
-          border: 1px solid rgba(255, 255, 255, 0.15);
-          box-shadow: 0 25px 25px rgba(0, 0, 0, 0.25);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          background: linear-gradient(rgba(255, 248, 236, 0.85), rgba(251, 233, 216, 0.55));
+          border: 1px solid rgba(217, 114, 64, 0.30);
+          box-shadow: 0 15px 35px rgba(217, 114, 64, 0.12);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border-radius: 10px;
           text-align: center;
           transition: 0.5s;
@@ -244,8 +246,8 @@ export default function Contact() {
         /* 单独 hover 一张卡 → 它自己浮上来 + 橙色光晕 */
         .contact__card:hover {
           z-index: 3;
-          border-color: rgba(255, 153, 102, 0.45);
-          box-shadow: 0 25px 50px rgba(255, 153, 102, 0.25);
+          border-color: rgba(217, 114, 64, 0.45);
+          box-shadow: 0 25px 50px rgba(217, 114, 64, 0.25);
           transform: rotate(0deg) translateY(-8px) scale(1.05);
           margin: 0 10px;
         }
@@ -258,7 +260,7 @@ export default function Contact() {
           left: 0;
           width: 100%;
           height: 40px;
-          background: rgba(255, 153, 102, 0.08);
+          background: rgba(217, 114, 64, 0.08);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -267,7 +269,7 @@ export default function Contact() {
         }
 
         .contact__card-icon {
-          color: #ff9966;
+          color: #D97240;
           margin-bottom: 0.8rem;
           display: flex;
           justify-content: center;
@@ -276,17 +278,18 @@ export default function Contact() {
         .contact__card-label {
           display: block;
           font-size: 0.75rem;
-          color: #ffffff;
+          color: var(--brand-primary-hover);
           letter-spacing: 0.1em;
           text-transform: uppercase;
           margin-bottom: 0.4rem;
+          font-weight: 600;
         }
 
         .contact__card-value {
-          display: block;          /* 2026-06-19: span 默认 inline,跟 inline-flex 按钮横排;强制 block 独立成行 */
+          display: block;
           font-size: 0.9rem;
           font-weight: 500;
-          color: #ffffff;
+          color: var(--text-primary);
         }
 
         /* 复制按钮 — absolute 装饰条正中央(横竖都居中),counter-rotate 保持水平 (2026-06-19 v3) */
@@ -305,9 +308,9 @@ export default function Contact() {
           padding: 0.35rem 0.95rem;
           font-size: 0.72rem;
           font-weight: 500;
-          color: #ff9966;
-          background: rgba(255, 153, 102, 0.12);
-          border: 1px solid rgba(255, 153, 102, 0.3);
+          color: #D97240;
+          background: rgba(217, 114, 64, 0.12);
+          border: 1px solid rgba(217, 114, 64, 0.3);
           border-radius: 100px;
           cursor: pointer;
           /* 不动 transform,只动背景/边框/阴影 */
@@ -324,9 +327,9 @@ export default function Contact() {
         }
 
         .contact__copy-btn:hover {
-          background: rgba(255, 153, 102, 0.22);
-          border-color: rgba(255, 153, 102, 0.55);
-          box-shadow: 0 -2px 10px rgba(255, 153, 102, 0.35);
+          background: rgba(217, 114, 64, 0.22);
+          border-color: rgba(217, 114, 64, 0.55);
+          box-shadow: 0 -2px 10px rgba(217, 114, 64, 0.35);
         }
 
         .contact__copy-btn:active {

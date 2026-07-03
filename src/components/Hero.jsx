@@ -1,5 +1,6 @@
-﻿import { useEffect, useRef, Fragment } from 'react'
-// 2026-06-22: 招 3 实施 — 完全删除 canvas 粒子 useEffect 块(下面已删),保留 video useEffect
+﻿// 2026-07-02: Fragment import 随 hero__stats 删除而移除(原用于 stats.map 的 Fragment key)
+// 2026-07-02: 完全删除 video 背景 + canvas 粒子 + hero-bg.webp
+// Hero 改成纯暖橙径向装饰背景,符合暖橙派气质
 
 export default function Hero() {
   const heroData = {
@@ -8,112 +9,29 @@ export default function Hero() {
     title2: '无限可能',
     // 2026-06-19: 文案拆成 4 行(每段两行),mobile 居中时左右更对称
     // 之前两段各一行,21 字自动换行后第二行只 8 字孤悬靠右,看着像没居中
-    desc: '5年短视频全链路运营经验\n精通多平台 IP 打造与 AI 视觉创作。\n从内容策划到商业变现\n用数据驱动增长。',
-    stats: [
-      { num: '300万+', label: 'GMV 累计成交额' },
-      { num: '400万+', label: '单条视频最高播放' },
-      { num: '100万+', label: '累计涨粉' },
-    ],
-    buttons: [
+    desc: '5年短视频全链路运营经验\n精通多平台 IP 打造与 AI 视觉创作。\n从内容策划到商业变现\n用数据驱动增长。',    buttons: [
       { label: '查看作品', href: '#projects' },
       { label: '了解更多', href: '#about' },
     ],
   };
 
-  const videoRef = useRef(null)
-
-  // 2026-06-22: 招 3 实施 — canvas 粒子 useEffect 整块删除
-  // 之前在 mobile 上持续 28 个粒子的 rAF 循环,即使滚出 Hero 视口仍在烧电
-  // 删了之后 Hero 静态氛围由背景渐变 + 视频/静态图承担,完全够用
-
-  // 背景视频: canplay 时淡入,确保首帧不闪烁
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    let rafId = 0
-    let fallbackTimer = 0  // 提前声明避免 handleCanPlay 内 TDZ 报错
-    const fadeTo = (from, to, duration, onDone) => {
-      const start = performance.now()
-      const tick = (now) => {
-        const t = Math.min(1, (now - start) / duration)
-        video.style.opacity = String(from + (to - from) * t)
-        if (t < 1) rafId = requestAnimationFrame(tick)
-        else if (onDone) onDone()
-      }
-      rafId = requestAnimationFrame(tick)
-    }
-
-    const handleCanPlay = () => {
-      // canplay 触发 → 清理 fallback timer,正常淡入
-      clearTimeout(fallbackTimer)
-      // 确保视频真的在播放
-      video.play().catch(() => {})
-      fadeTo(0, 1, 500)
-    }
-
-    // 2026-06-19: 5s 还没 canplay 时的 fallback
-    // 之前逻辑是 opacity:0 → canplay → fadeIn,如果视频加载慢(12MB+ 移动网)
-    // 用户会一直看到黑屏+渐变背景,5s 后强制半透明淡入 + 模糊兜底
-    // 保证即使视频没 ready 也至少有个视觉内容
-    const handleFallback = () => {
-      video.play().catch(() => {})
-      video.style.filter = 'blur(20px) saturate(1.15)'
-      fadeTo(0, 0.6, 800)
-    }
-    fallbackTimer = setTimeout(handleFallback, 5000)
-
-    if (video.readyState >= 3) {
-      // 已经能播放(浏览器缓存命中)
-      handleCanPlay()
-    } else {
-      video.addEventListener('canplay', handleCanPlay, { once: true })
-    }
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      clearTimeout(fallbackTimer)
-      video.removeEventListener('canplay', handleCanPlay)
-    }
-  }, [])
-
   return (
     <section className="hero" id="hero">
       <div className="hero__bg">
-        {/* 2026-06-22 招 1 实施:
-            desktop 端用 video 背景 (有质感)
-            mobile 端用现成的 hero-bg.webp 静态图 (130KB, 立刻加载完)
-            用 CSS media query 控制显示/隐藏,React 不需要双份逻辑 */}
-        <video
-          ref={videoRef}
-          className="hero__bg-video"
-          src="/背景视频1.mp4"
-          muted
-          autoPlay
-          loop
-          playsInline
-          // 旧版 iOS Safari / 微信内置浏览器兼容:加 webkit 前缀,避免自动全屏播放
-          // iOS 10 之前只认 webkit-playsinline,iOS 10+ 才开始认 playsInline
-          webkit-playsinline="true"
-          // 微信 X5 内核:防止视频被劫持跳转
-          x5-video-player-type="h5"
-          x5-video-orientation="portrait"
-          // 2026-06-19: auto → metadata,只下载 metadata 不预下载整个视频
-          // 首屏只加载几 KB 元数据,真正播放时再分段下载
-          preload="metadata"
-          aria-hidden="true"
-        />
-        {/* mobile 端静态背景图 — 130KB WebP,比 2.5MB 视频快 20 倍 */}
+        {/* 2026-07-03 招:Hero 加入人物艺术照(中间偏右)
+            用户上传 D:\workfile\简历\照片\艺术照.jpeg,
+            scripts/remove-bg.mjs 用 @imgly/background-removal-node AI 抠图
+            把米黄背景去掉,输出 public/hero-portrait.png(透明背景) */}
         <img
-          className="hero__bg-img"
-          src="/hero-bg.webp"
+          className="hero__portrait"
+          src="/hero-portrait.png"
           alt=""
           aria-hidden="true"
         />
         <div className="hero__gradient hero__gradient--1" />
         <div className="hero__gradient hero__gradient--2" />
+        <div className="hero__gradient hero__gradient--3" />
         <div className="hero__grid" />
-        <div className="hero__fade" />
       </div>
 
       <div className="hero__content container hero__layout">
@@ -163,23 +81,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="hero__stats">
-            {/* Uiverse 风:动画 blob 装饰球 — 紫色版 */}
-            <div className="hero__stats-blob" aria-hidden="true"></div>
-
-            {/* Uiverse 风:5px 内缩的毛玻璃内层 */}
-            <div className="hero__stats-glass">
-              {heroData.stats.map((s, i) => (
-                <Fragment key={i}>
-                  {i > 0 && <div className="hero__stat-divider" />}
-                  <div className="hero__stat">
-                    <span className="hero__stat-num">{s.num}</span>
-                    <span className="hero__stat-label">{s.label}</span>
-                  </div>
-                </Fragment>
-              ))}
-            </div>
-          </div>
+          {/* 2026-07-02: 整块 hero__stats 数据条已删除(用户要求"核心优势去掉") */}
         </div>
 
       </div>
@@ -189,59 +91,59 @@ export default function Hero() {
         <span>向下滚动</span>
       </div>
 
-      <style>{`
+<style>{`
         .hero {
           position: relative;
           min-height: 100vh;
           display: flex;
           align-items: center;
           overflow: hidden;
+          /* 2026-07-02: Hero 暖底铺底 + 暖橙径向渐变作为氛围光 */
+          background: var(--bg-primary);
         }
 
         .hero__bg {
           position: absolute;
           inset: 0;
           z-index: 0;
+          pointer-events: none;
         }
 
-        .hero__bg-video {
+        /* 2026-07-03: 人物艺术照融入 Hero 背景(无缝融合 v3 — AI 抠图版)
+           关键: scripts/remove-bg.mjs 用 AI 把图片背景去掉,
+           PNG 本身就是 alpha 透明,不需要 mask-image / mix-blend-mode
+           自然就和暖底 #fefcf6 融合,无矩形边缘 */
+        .hero__portrait {
           position: absolute;
-          inset: 0;
-          z-index: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: right 12% bottom 0;
-          opacity: 0;
-          will-change: opacity, filter;
-          /* 2026-06-19: 加 filter transition,让 5s fallback 时 blur(20px) 平滑过渡 */
-          transition: opacity 0.5s ease, filter 0.6s ease;
+          top: 50%;
+          /* 2026-07-03: right 6% → 18%,图片往左移 */
+          right: 18%;
+          transform: translateY(-50%);
+          height: 88vh;
+          max-height: 760px;
+          width: auto;
+          max-width: 56vw;
+          object-fit: contain;
+          opacity: 0.92;
+          pointer-events: none;
+          user-select: none;
         }
 
-        /* 2026-06-22 招 1 实施:
-           mobile 端静态背景图,默认 desktop 隐藏 (display:none)
-           mobile 媒体查询内切换成 display:block,把 video 切到 display:none */
-        .hero__bg-img {
-          display: none;
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          object-position: right 12% bottom 0;
-        }
-
-        @media (min-width: 1025px) {
-          .hero__bg-video { object-position: right -2% bottom 0; }
+        @media (max-width: 1024px) {
+          /* tablet: 缩小图片,避免挤占文字 */
+          .hero__portrait {
+            height: 70vh;
+            max-height: 560px;
+            opacity: 0.78;
+            right: 6%;
+          }
         }
 
         @media (max-width: 768px) {
-          /* 2026-06-22 招 1 实施:
-             mobile 完全切到 hero-bg.webp 静态图,video 元素 display:none
-             (display:none 浏览器会停止 video 解码,彻底省电省带宽) */
-          .hero__bg-video { display: none; }
-          .hero__bg-img { display: block; object-position: center bottom 0; }
+          /* mobile: 完全隐藏,纯文字展示,避免移动端视觉混乱 */
+          .hero__portrait {
+            display: none;
+          }
         }
 
         .hero__gradient {
@@ -255,43 +157,35 @@ export default function Hero() {
           height: 600px;
           top: -200px;
           right: -100px;
-          background: radial-gradient(circle, rgba(99,102,241,0.36), transparent 70%);
+          background: radial-gradient(circle, rgba(217, 114, 64, 0.32), transparent 70%);
         }
 
         .hero__gradient--2 {
-          width: 400px;
-          height: 400px;
+          width: 480px;
+          height: 480px;
           bottom: -100px;
           left: -100px;
-          background: radial-gradient(circle, rgba(139,92,246,0.24), transparent 70%);
+          background: radial-gradient(circle, rgba(244, 215, 88, 0.30), transparent 70%);
+        }
+
+        /* 2026-07-02: 新增第 3 个光斑,左中位置,平衡构图 */
+        .hero__gradient--3 {
+          width: 380px;
+          height: 380px;
+          top: 40%;
+          left: 30%;
+          background: radial-gradient(circle, rgba(217, 114, 64, 0.16), transparent 70%);
         }
 
         .hero__grid {
           position: absolute;
           inset: 0;
           background-image:
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            linear-gradient(rgba(217, 114, 64, 0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(217, 114, 64, 0.04) 1px, transparent 1px);
           background-size: 60px 60px;
           mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
           -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
-        }
-
-        .hero__fade {
-          position: absolute;
-          left: 0; right: 0; bottom: 0;
-          height: 12%;
-          background: linear-gradient(180deg, transparent 0%, rgba(3,6,15,0.6) 50%, #03060f 100%);
-          pointer-events: none;
-        }
-
-        .hero::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-          background: linear-gradient(180deg, rgba(10,10,15,0.05) 0%, rgba(10,10,15,0.2) 30%, rgba(10,10,15,0.72) 65%, rgba(10,10,15,0.92) 100%);
         }
 
         .hero__layout {
@@ -320,12 +214,26 @@ export default function Hero() {
           justify-content: center;
           width: fit-content;
           padding: 0.45rem 0.95rem;
-          background: rgba(99, 102, 241, 0.08);
-          border: 1px solid rgba(99, 102, 241, 0.15);
+          background: rgba(217, 114, 64, 0.10);
+          border: 1px solid rgba(217, 114, 64, 0.25);
           border-radius: 100px;
           font-size: 0.85rem;
-          color: var(--accent-hover);
+          color: var(--brand-primary-hover);
+          font-weight: 500;
           margin-bottom: 1.4rem;
+          /* 2026-07-02: 入场动画从 GSAP 移到 CSS */
+          animation: hero-badge-enter 1.0s var(--ease-out) 0.9s both;
+        }
+
+        @keyframes hero-badge-enter {
+          from {
+            clip-path: inset(0 100% 0 0);
+            opacity: 0;
+          }
+          to {
+            clip-path: inset(0 0% 0 0);
+            opacity: 1;
+          }
         }
 
         .hero__badge-dot {
@@ -338,7 +246,7 @@ export default function Hero() {
 
         @keyframes pulse {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
+          50%      { opacity: 0.4; }
         }
 
         .hero__title {
@@ -353,59 +261,76 @@ export default function Hero() {
           position: relative;
           display: inline-block;
           cursor: pointer;
+          /* 2026-07-02: 入场动画从 GSAP 移到 CSS,避免 StrictMode 卡 from */
+          animation: hero-title-enter 1.6s var(--ease-out) 0.4s both;
         }
 
-        /* Base "潘英成" — 白色实心填充(始终可见,wipe 前是白色) */
+        @keyframes hero-title-enter {
+          from {
+            clip-path: inset(0 100% 0 0);
+            transform: translateY(40px) scaleY(0.85);
+            opacity: 0;
+          }
+          to {
+            clip-path: inset(0 0% 0 0);
+            transform: translateY(0) scaleY(1);
+            opacity: 1;
+          }
+        }
+
+        /* 2026-07-02: 改色 — 暖底上默认是墨色(不再 white,wipe 前是墨色) */
         .hero__title-base {
-          color: white;
+          color: var(--text-primary);
         }
 
-        /* Fill overlay — 紫色填充,wipe 时从左往右"擦开"覆盖白色 */
+        /* Fill overlay — 暖橙色,wipe 时从左往右"擦开"覆盖墨色 */
         .hero__title-fill {
           position: absolute;
           top: 0;
           left: 0;
           width: 0%;
           height: 100%;
-          color: #6366f1;
+          color: var(--brand-primary);
           overflow: hidden;
           white-space: nowrap;
-          border-right: 4px solid #6366f1;
+          border-right: 4px solid var(--brand-primary);
           transition: width 0.65s cubic-bezier(0.65, 0, 0.35, 1);
           display: flex;
           align-items: center;
           justify-content: flex-start;
         }
 
-        /* Hover 触发 wipe — 紫色从左擦到右,完成时整体发光 */
+        /* Hover 触发 wipe — 暖橙从左擦到右,完成时整体发光 */
         .hero__title-line:hover .hero__title-fill {
           width: 100%;
-          filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.7))
-                  drop-shadow(0 0 6px rgba(99, 102, 241, 0.4));
+          filter: drop-shadow(0 0 20px rgba(217, 114, 64, 0.7))
+                  drop-shadow(0 0 6px rgba(217, 114, 64, 0.4));
         }
 
         .hero__title-accent {
-          background: var(--gradient-hero);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: var(--brand-primary);
         }
 
+        /* 2026-07-02: 副标题从渐变文字改成实色暖橙(渐变在暖底上被吃光) */
         .hero__subtitle {
           display: inline-flex;
           align-items: center;
           gap: 0.85rem;
           margin-top: 0;
           font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-          font-weight: 500;
+          font-weight: 600;
           letter-spacing: 0.12em;
           line-height: 1;
-          background: var(--gradient-hero);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          opacity: 0.95;
+          color: var(--brand-primary);
+          opacity: 0.92;
           text-transform: none;
+          /* 2026-07-02: 入场动画从 GSAP 移到 CSS */
+          animation: hero-subtitle-enter 0.8s var(--ease-out) 1.2s both;
+        }
+
+        @keyframes hero-subtitle-enter {
+          from { opacity: 0; transform: translateX(-20px); }
+          to   { opacity: 0.92; transform: translateX(0); }
         }
 
         .hero__subtitle-bar {
@@ -413,9 +338,16 @@ export default function Hero() {
           width: 36px;
           height: 2px;
           border-radius: 2px;
-          background: var(--gradient-hero);
+          background: var(--brand-primary);
           flex-shrink: 0;
-          box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+          box-shadow: 0 0 12px rgba(244, 215, 88, 0.6);
+          /* 2026-07-02: 入场动画 width: 0 → 36px */
+          animation: hero-bar-enter 0.8s var(--ease-out) 1.1s both;
+        }
+
+        @keyframes hero-bar-enter {
+          from { width: 0; }
+          to   { width: 36px; }
         }
 
         .hero__desc {
@@ -426,6 +358,29 @@ export default function Hero() {
           max-width: 560px;
         }
 
+        /* 2026-07-02: 描述每行单独 stagger 入场,用 nth-child 模拟 stagger */
+        .hero__desc > span {
+          display: inline-block;
+          animation: hero-desc-line-enter 1.0s var(--ease-out) both;
+        }
+        .hero__desc > span:nth-child(1) { animation-delay: 1.30s; }
+        .hero__desc > span:nth-child(2) { animation-delay: 1.42s; }
+        .hero__desc > span:nth-child(3) { animation-delay: 1.54s; }
+        .hero__desc > span:nth-child(4) { animation-delay: 1.66s; }
+
+        @keyframes hero-desc-line-enter {
+          from {
+            clip-path: inset(100% 0 0 0);
+            transform: translateY(25px);
+            opacity: 0;
+          }
+          to {
+            clip-path: inset(0 0 0 0);
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
         .hero__actions {
           display: flex;
           gap: 1rem;
@@ -433,31 +388,33 @@ export default function Hero() {
           margin-bottom: 4rem;
         }
 
-        /* Uiverse.io cssbuttons-io 渐变按钮 — 完整复现文档代码 */
+/* Hero CTA 按钮 — 2026-07-03 改成白底 + 主题色字
+   原 Uiverse 渐变描边 + 深底白字,改成更克制的"白底暖橙字"风格
+   跟 Hero 整体"温暖但克制"气质更搭,跟暖底背景呼应 */
         .btn-uv {
           align-items: center;
-          background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-          border: 0;
+          background: transparent;             /* 边框由 border 实现,外层透明 */
+          border: 1.5px solid var(--brand-primary);
           border-radius: 8px;
-          box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+          box-shadow: 0 6px 18px -4px rgba(217, 114, 64, 0.28);
           box-sizing: border-box;
-          color: #ffffff;
+          color: var(--brand-primary);
           display: inline-flex;
           font-size: 18px;
           justify-content: center;
           line-height: 1em;
           max-width: 100%;
           min-width: 140px;
-          padding: 3px;
+          padding: 0;                          /* 内层 span 自己有 padding */
           text-decoration: none;
           user-select: none;
           -webkit-user-select: none;
           touch-action: manipulation;
           white-space: nowrap;
           cursor: pointer;
-          transition: all 0.3s;
+          transition: all 0.3s var(--ease-out);
           font-family: inherit;
-          font-weight: 500;
+          font-weight: 600;
           /* 入场动效 — 纯 CSS 关键帧,1.6s 延迟匹配原 GSAP 节奏,power3.out 缓动 */
           animation: btn-uv-entrance 1s cubic-bezier(0.16, 1, 0.3, 1) 1.6s both;
         }
@@ -479,101 +436,36 @@ export default function Hero() {
           outline: 0;
         }
 
+        /* 内层 span:白底 + 主题色字 */
         .btn-uv span {
-          background-color: rgb(5, 6, 45);
-          padding: 16px 24px;
-          border-radius: 6px;
+          background-color: #fefcf6;          /* 暖奶白(跟网站底色一致,无缝) */
+          color: var(--brand-primary);         /* 主题色暖橙 */
+          padding: 14px 24px;
+          border-radius: 6.5px;
           width: 100%;
           height: 100%;
-          transition: 300ms;
+          transition: background-color 0.25s var(--ease-out), color 0.25s var(--ease-out);
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 0.5rem;
-          color: #ffffff;
           font-size: 0.95rem;
+          font-weight: 600;
         }
 
+        /* hover: 主题色底 + 白字(反色对比) */
+        .btn-uv:hover {
+          border-color: var(--brand-primary-hover);
+          box-shadow: 0 10px 24px -4px rgba(217, 114, 64, 0.40);
+          transform: translateY(-1px);
+        }
         .btn-uv:hover span {
-          background: none;
+          background-color: var(--brand-primary);
+          color: #fefcf6;
         }
 
         .btn-uv:active {
-          transform: scale(0.9);
-        }
-
-        /* ============= Uiverse 风格毛玻璃面板 ============= */
-        /* 外层 .hero__stats — 文档里的 .card,负责 box-shadow + 装饰球 */
-        .hero__stats {
-          position: relative;
-          width: fit-content;
-          padding: 5px;                       /* 跟文档 .card → .bg 5px 间距一致 */
-          overflow: hidden;
-          border-radius: 20px;
-          /* 暗色主题不用 #bebebe/#ffffff 阴影,改用紫色微光 */
-          box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
-        }
-
-        /* 装饰球 — 文档里的 .blob,紫色版 */
-        .hero__stats-blob {
-          position: absolute;
-          z-index: 0;
-          top: 50%;
-          left: 50%;
-          width: 140px;
-          height: 140px;
-          border-radius: 50%;
-          background-color: var(--accent);
-          opacity: 0.55;
-          filter: blur(20px);
-          animation: hero-stats-blob-bounce 6s infinite ease;
-          pointer-events: none;
-        }
-
-        @keyframes hero-stats-blob-bounce {
-          0%   { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
-          25%  { transform: translate(-100%, -100%) translate3d(100%, 0, 0); }
-          50%  { transform: translate(-100%, -100%) translate3d(100%, 100%, 0); }
-          75%  { transform: translate(-100%, -100%) translate3d(0, 100%, 0); }
-          100% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
-        }
-
-        /* 内层毛玻璃 — 文档里的 .bg,5px 内缩 + backdrop-filter blur(24px) */
-        .hero__stats-glass {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          align-items: center;
-          gap: 2.5rem;
-          padding: 1.8rem 2.5rem;
-          background: rgba(255, 255, 255, 0.08);    /* 暗色玻璃微白底 */
-          backdrop-filter: blur(24px);              /* 跟文档一致 */
-          -webkit-backdrop-filter: blur(24px);
-          border-radius: 16px;
-          outline: 1px solid rgba(255, 255, 255, 0.15);  /* 跟文档 2px solid white 同款,改细一点 */
-        }
-
-        .hero__stat-num {
-          display: block;
-          font-size: 1.6rem;
-          font-weight: 700;
-          letter-spacing: -0.02em;
-          background: var(--gradient-hero);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .hero__stat-label {
-          font-size: 0.8rem;
-          color: white;
-          margin-top: 0.2rem;
-          display: block;
-        }
-
-        .hero__stat-divider {
-          width: 1px;
-          height: 40px;
-          background: var(--border);
+          transform: scale(0.97);
         }
 
         .hero__scroll {
@@ -589,6 +481,13 @@ export default function Hero() {
           color: var(--text-muted);
           font-size: 0.75rem;
           letter-spacing: 0.1em;
+          /* 2026-07-02: 入场动画从 GSAP 移到 CSS */
+          animation: hero-scroll-enter 1s var(--ease-out) 2.4s both;
+        }
+
+        @keyframes hero-scroll-enter {
+          from { opacity: 0; transform: translate(-50%, 20px); }
+          to   { opacity: 1; transform: translate(-50%, 0); }
         }
 
         .hero__scroll-line {
@@ -631,7 +530,6 @@ export default function Hero() {
           /* 2026-06-19 FIX: subtitle 宽度被拉伸到全宽 327px,内部 justify-content:normal
              (=flex-start) 让文字贴左;改为 center 让"用内容创造无限可能"居中 */
           .hero__subtitle { justify-content: center; }
-          .hero__stats { margin: 0 auto; width: 100%; }
 
         }
 
@@ -641,29 +539,7 @@ export default function Hero() {
 
         @media (max-width: 768px) {
           .hero__content { padding-top: 8rem; }
-          .hero__stats {
-            flex-direction: column;
-            gap: 1.2rem;
-            padding: 1.5rem;
-            width: 100%;
-          }
-          /* FIX 2026-06-19: hero__stats 已 column,但内层 hero__stats-glass 还是 row,
-             导致三个 stat + 两个 divider 横排,min-content ~504px 撑破容器。
-             mobile 必须把内层也改 column,三个 stat 垂直堆叠。 */
-          .hero__stats-glass {
-            flex-direction: column;
-            gap: 1rem;
-            padding: 1.5rem;
-            width: 100%;
-            min-width: 0;             /* flex item 兜底,允许收缩 */
-          }
-          .hero__stat-divider {
-            width: 60px;
-            height: 1px;
-          }
-          .hero__stat {
-            text-align: center;
-          }
+          /* 2026-07-02: 删 .hero__stats-glass mobile 规则(数据条整块下线) */
           .hero__scroll { display: none; }
 
           /* ============================================================
@@ -677,7 +553,6 @@ export default function Hero() {
              偏移 hero__copy 中轴。CSS !important 强制清除。
              max-width:768px 只在 mobile 触发,桌面端入场动画不受影响。 */
           .hero__subtitle,
-          .hero__stats,
           .hero__title-line,
           .hero__badge,
           .hero__scroll,
@@ -726,10 +601,6 @@ export default function Hero() {
           /* 2026-06-22 招 4 实施:
              backdrop-filter blur 在 mobile 是 GPU 杀手,关掉
              半透明底色仍然保留,视觉差异很小,GPU 压力减半 */
-          .hero__stats-glass {
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-          }
         }
       `}</style>
     </section>

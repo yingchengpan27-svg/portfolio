@@ -22,73 +22,12 @@ export function useGsapAnimations() {
       if (prefersReduced) return
 
       // ==========================================
-      //  HERO OPENING — 整段开场(无 ScrollTrigger)
+      //  HERO OPENING — 全部改用 CSS @keyframes (Hero.jsx / Navbar.jsx 内)
+      //  2026-07-02: 整段 GSAP from 在 React 19 StrictMode 双调用下,ctx.revert()
+      //  会把 chain 中段的 element 还原到 from 起点,delay 链后半段全部卡死
+      //  (01 全局日志 §5.5 同类坑),CSS animation fill-mode:both 完全免疫
+      //  —— Navbar / title-line / badge / subtitle-bar / subtitle / desc / stats / scroll 全部走 CSS
       // ==========================================
-
-      gsap.from('.nav', { y: -60, opacity: 0, duration: dur, ease: 'power3.out', delay: 0.1 })
-
-      gsap.from('.hero__title-line', {
-        clipPath: 'inset(0 100% 0 0)',
-        scaleY: 0.85,
-        y: 40,
-        opacity: 0,
-        duration: 1.6,
-        ease: 'expo.out',
-        delay: 0.4,
-      })
-
-      gsap.from('.hero__badge', {
-        clipPath: 'inset(0 100% 0 0)',
-        opacity: 0,
-        duration: 1.0,
-        ease: 'power3.out',
-        delay: 0.9,
-      })
-
-      gsap.from('.hero__subtitle-bar', {
-        width: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 1.1,
-      })
-
-      gsap.from('.hero__subtitle', {
-        opacity: 0,
-        x: -20,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 1.2,
-      })
-
-      gsap.from('.hero__desc > span', {
-        clipPath: 'inset(100% 0 0 0)',
-        y: 25,
-        opacity: 0,
-        duration: 1.0,
-        stagger: 0.12,
-        ease: 'power3.out',
-        delay: 1.3,
-      })
-
-      // 7. 按钮组 — 动效在 Hero.jsx 用纯 CSS @keyframes 实现
-      //    (React 19 StrictMode + gsap.context().revert 多次打断 GSAP 路径,改用 CSS 更稳)
-
-      gsap.from('.hero__stats', {
-        clipPath: 'inset(100% 0 0 0)',
-        y: 40,
-        opacity: 0,
-        duration: 1.4,
-        ease: 'expo.out',
-        delay: 2.0,
-      })
-
-      gsap.from('.hero__scroll', {
-        opacity: 0,
-        y: 20,
-        duration: 1.0,
-        ease: 'power3.out',
-        delay: 2.4,
-      })
 
       // Hero 背景视差 — 2026-06-19: mobile 关闭视差
       // scrollTrigger scrub 模式持续触发重绘,移动端会卡顿
@@ -148,14 +87,14 @@ export function useGsapAnimations() {
         })
       })
 
-      // 卡片网格
-      const cardGrids = [
-        '.about__grid',
-        '.about__data-grid',
-        '.skills__grid',
-        '.projects__grid',
-        '.contact__cards',
-      ]
+// 卡片网格
+        const cardGrids = [
+          '.about__grid',
+          // 2026-07-02: .about__data-grid 已下线
+          // 2026-07-02: .skills__grid 已下线(Skills 组件删除,标题"核心优势"被用户要求去掉)
+          '.projects__grid',
+          '.contact__cards',
+        ]
 
       cardGrids.forEach(selector => {
         document.querySelectorAll(selector).forEach(grid => {
