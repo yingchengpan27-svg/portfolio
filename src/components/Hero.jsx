@@ -1,6 +1,11 @@
-﻿// 2026-07-02: Fragment import 随 hero__stats 删除而移除(原用于 stats.map 的 Fragment key)
-// 2026-07-02: 完全删除 video 背景 + canvas 粒子 + hero-bg.webp
-// Hero 改成纯暖橙径向装饰背景,符合暖橙派气质
+﻿// 2026-07-04 回退:还原到今天 session 开始的状态
+// - 暖奶白 BG (var(--bg-primary))
+// - 3 个暖橙 corner gradients (右上暖橙 + 左下金黄 + 左中暖橙)
+// - 抠图潘英成 portrait 居中偏右
+// - 标题 wipe 动效 + 4 行 desc + 2 个 btn-uv 按钮
+// - 移除 stats 玻璃卡片
+// - 移除 Skills section(App.jsx 已经在更早时删过)
+// - 不用 video / 不用 canvas / 不用 3D raymarch
 
 export default function Hero() {
   const heroData = {
@@ -8,8 +13,8 @@ export default function Hero() {
     title1: '用内容创造',
     title2: '无限可能',
     // 2026-06-19: 文案拆成 4 行(每段两行),mobile 居中时左右更对称
-    // 之前两段各一行,21 字自动换行后第二行只 8 字孤悬靠右,看着像没居中
-    desc: '5年短视频全链路运营经验\n精通多平台 IP 打造与 AI 视觉创作。\n从内容策划到商业变现\n用数据驱动增长。',    buttons: [
+    desc: '5年短视频全链路运营经验\n精通多平台 IP 打造与 AI 视觉创作。\n从内容策划到商业变现\n用数据驱动增长。',
+    buttons: [
       { label: '查看作品', href: '#projects' },
       { label: '了解更多', href: '#about' },
     ],
@@ -80,8 +85,6 @@ export default function Hero() {
               </span>
             </a>
           </div>
-
-          {/* 2026-07-02: 整块 hero__stats 数据条已删除(用户要求"核心优势去掉") */}
         </div>
 
       </div>
@@ -98,7 +101,7 @@ export default function Hero() {
           display: flex;
           align-items: center;
           overflow: hidden;
-          /* 2026-07-02: Hero 暖底铺底 + 暖橙径向渐变作为氛围光 */
+          /* 2026-07-04 回退:暖奶白 BG + 暖橙 corner gradients */
           background: var(--bg-primary);
         }
 
@@ -109,14 +112,13 @@ export default function Hero() {
           pointer-events: none;
         }
 
-        /* 2026-07-03: 人物艺术照融入 Hero 背景(无缝融合 v3 — AI 抠图版)
+        /* 2026-07-03 招:人物艺术照融入 Hero 背景(无缝融合 v3 — AI 抠图版)
            关键: scripts/remove-bg.mjs 用 AI 把图片背景去掉,
            PNG 本身就是 alpha 透明,不需要 mask-image / mix-blend-mode
            自然就和暖底 #fefcf6 融合,无矩形边缘 */
         .hero__portrait {
           position: absolute;
           top: 50%;
-          /* 2026-07-03: right 6% → 18%,图片往左移 */
           right: 18%;
           transform: translateY(-50%);
           height: 88vh;
@@ -130,7 +132,6 @@ export default function Hero() {
         }
 
         @media (max-width: 1024px) {
-          /* tablet: 缩小图片,避免挤占文字 */
           .hero__portrait {
             height: 70vh;
             max-height: 560px;
@@ -140,7 +141,6 @@ export default function Hero() {
         }
 
         @media (max-width: 768px) {
-          /* mobile: 完全隐藏,纯文字展示,避免移动端视觉混乱 */
           .hero__portrait {
             display: none;
           }
@@ -180,9 +180,10 @@ export default function Hero() {
         .hero__grid {
           position: absolute;
           inset: 0;
+          /* 2026-07-04:网格透明度 0.04 → 0.10,提升辨识度 */
           background-image:
-            linear-gradient(rgba(217, 114, 64, 0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(217, 114, 64, 0.04) 1px, transparent 1px);
+            linear-gradient(rgba(217, 114, 64, 0.10) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(217, 114, 64, 0.10) 1px, transparent 1px);
           background-size: 60px 60px;
           mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
           -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black, transparent);
@@ -265,25 +266,12 @@ export default function Hero() {
           animation: hero-title-enter 1.6s var(--ease-out) 0.4s both;
         }
 
-        @keyframes hero-title-enter {
-          from {
-            clip-path: inset(0 100% 0 0);
-            transform: translateY(40px) scaleY(0.85);
-            opacity: 0;
-          }
-          to {
-            clip-path: inset(0 0% 0 0);
-            transform: translateY(0) scaleY(1);
-            opacity: 1;
-          }
-        }
-
-        /* 2026-07-02: 改色 — 暖底上默认是墨色(不再 white,wipe 前是墨色) */
+        /* 2026-07-04 回退:暖奶白底上墨色 */
         .hero__title-base {
           color: var(--text-primary);
         }
 
-        /* Fill overlay — 暖橙色,wipe 时从左往右"擦开"覆盖墨色 */
+        /* Fill overlay — 暖橙 wipe */
         .hero__title-fill {
           position: absolute;
           top: 0;
@@ -300,11 +288,11 @@ export default function Hero() {
           justify-content: flex-start;
         }
 
-        /* Hover 触发 wipe — 暖橙从左擦到右,完成时整体发光 */
+        /* Hover 触发 wipe — 暖橙 wipe 完成后整体发光(暖白外光晕,跟暖主题一致) */
         .hero__title-line:hover .hero__title-fill {
           width: 100%;
-          filter: drop-shadow(0 0 20px rgba(217, 114, 64, 0.7))
-                  drop-shadow(0 0 6px rgba(217, 114, 64, 0.4));
+          filter: drop-shadow(0 0 20px rgba(254, 252, 246, 0.85))
+                  drop-shadow(0 0 6px rgba(254, 252, 246, 0.55));
         }
 
         .hero__title-accent {
@@ -341,7 +329,6 @@ export default function Hero() {
           background: var(--brand-primary);
           flex-shrink: 0;
           box-shadow: 0 0 12px rgba(244, 215, 88, 0.6);
-          /* 2026-07-02: 入场动画 width: 0 → 36px */
           animation: hero-bar-enter 0.8s var(--ease-out) 1.1s both;
         }
 
@@ -388,12 +375,12 @@ export default function Hero() {
           margin-bottom: 4rem;
         }
 
-/* Hero CTA 按钮 — 2026-07-03 改成白底 + 主题色字
+        /* Hero CTA 按钮 — 2026-07-03 改成白底 + 主题色字
    原 Uiverse 渐变描边 + 深底白字,改成更克制的"白底暖橙字"风格
    跟 Hero 整体"温暖但克制"气质更搭,跟暖底背景呼应 */
         .btn-uv {
           align-items: center;
-          background: transparent;             /* 边框由 border 实现,外层透明 */
+          background: transparent;
           border: 1.5px solid var(--brand-primary);
           border-radius: 8px;
           box-shadow: 0 6px 18px -4px rgba(217, 114, 64, 0.28);
@@ -405,7 +392,7 @@ export default function Hero() {
           line-height: 1em;
           max-width: 100%;
           min-width: 140px;
-          padding: 0;                          /* 内层 span 自己有 padding */
+          padding: 0;
           text-decoration: none;
           user-select: none;
           -webkit-user-select: none;
@@ -438,8 +425,8 @@ export default function Hero() {
 
         /* 内层 span:白底 + 主题色字 */
         .btn-uv span {
-          background-color: #fefcf6;          /* 暖奶白(跟网站底色一致,无缝) */
-          color: var(--brand-primary);         /* 主题色暖橙 */
+          background-color: #fefcf6;
+          color: var(--brand-primary);
           padding: 14px 24px;
           border-radius: 6.5px;
           width: 100%;
@@ -453,7 +440,6 @@ export default function Hero() {
           font-weight: 600;
         }
 
-        /* hover: 主题色底 + 白字(反色对比) */
         .btn-uv:hover {
           border-color: var(--brand-primary-hover);
           box-shadow: 0 10px 24px -4px rgba(217, 114, 64, 0.40);
@@ -468,6 +454,7 @@ export default function Hero() {
           transform: scale(0.97);
         }
 
+        /* 2026-07-04 回退:stats 毛玻璃块整体删掉,JSX 也没有 */
         .hero__scroll {
           position: absolute;
           bottom: 2.5rem;
@@ -493,7 +480,7 @@ export default function Hero() {
         .hero__scroll-line {
           width: 1px;
           height: 40px;
-          background: linear-gradient(to bottom, var(--accent), transparent);
+          background: linear-gradient(to bottom, var(--brand-primary), transparent);
           animation: scrollLine 2s ease-in-out infinite;
         }
 
@@ -529,8 +516,7 @@ export default function Hero() {
           .hero__actions { justify-content: center; flex-wrap: wrap; }
           /* 2026-06-19 FIX: subtitle 宽度被拉伸到全宽 327px,内部 justify-content:normal
              (=flex-start) 让文字贴左;改为 center 让"用内容创造无限可能"居中 */
-          .hero__subtitle { justify-content: center; }
-
+.hero__subtitle { justify-content: center; }
         }
 
         @media (max-width: 1024px) {
@@ -539,7 +525,6 @@ export default function Hero() {
 
         @media (max-width: 768px) {
           .hero__content { padding-top: 8rem; }
-          /* 2026-07-02: 删 .hero__stats-glass mobile 规则(数据条整块下线) */
           .hero__scroll { display: none; }
 
           /* ============================================================
@@ -564,8 +549,8 @@ export default function Hero() {
           }
 
           /* 关键修复:mobile 没 hover,完全隐藏 fill 层
-             否则 width:0 的盒子仍会渲染 4px 紫色 border-right,
-             "潘英成"右侧会一直挂一根紫竖条 */
+             否则 width:0 的盒子仍会渲染 4px 暖橙 border-right,
+             "潘英成"右侧会一直挂一根暖橙竖条 */
           .hero__title-fill {
             display: none;
           }

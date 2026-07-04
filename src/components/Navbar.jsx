@@ -7,6 +7,8 @@ const navbarData = {
     { label: '首页', href: '#hero' },
     { label: '关于', href: '#about' },
     { label: '作品', href: '#projects' },
+    // 2026-07-04: 新增"方法"菜单,导到 Methodology(#methodology)板块
+    { label: '方法', href: '#methodology' },
     { label: '操盘账号', href: '#accounts' },
     // 2026-07-02: '优势' / #skills 菜单项删除(Skills 区被用户去掉,标题是"核心优势")
     { label: '联系', href: '#contact' },

@@ -93,6 +93,8 @@ export function useGsapAnimations() {
           // 2026-07-02: .about__data-grid 已下线
           // 2026-07-02: .skills__grid 已下线(Skills 组件删除,标题"核心优势"被用户要求去掉)
           '.projects__grid',
+          // 2026-07-04: 跟 Projects / Contact 卡片网格共享同一套入场动画
+          '.methodology__grid',
           '.contact__cards',
         ]
 
