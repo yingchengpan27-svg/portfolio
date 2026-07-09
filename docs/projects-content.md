@@ -91,7 +91,7 @@
 | `gradient` | `linear-gradient(135deg, #fefcf6 0%, #FBE9D8 50%, #D97240 100%)` | 暖奶 → 暖橙软 → 暖橙 |
 | `icon` | `🏥` | 无视频时显示 |
 | `video` | `/doctor-ip.mp4` | `public/` 下文件 |
-| `link` | ` https://v.douyin.com/7O2UxYhhawM/` | 抖音号主页 |
+| `link` | `https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink` | 新片场视频链接 |
 | `col` | `2` | 第 2 列 |
 | `row` | `3` | 第 3 行 |
 

@@ -61,7 +61,7 @@ const projects = [
     gradient: 'linear-gradient(135deg, #fefcf6 0%, #FBE9D8 50%, #D97240 100%)',
     icon: '🏥',
     video: '/doctor-ip.mp4',
-    link: 'https://v.douyin.com/7O2UxYhhawM/',
+    link: 'https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink',
     col: '2',
     row: '3',
   },
