@@ -24,7 +24,8 @@ const projects = [
     icon: '✨',
     video: '/ZURU Fuggler.mp4',
     link: 'https://v.douyin.com/nLAurIMyiC0/',
-    row: '1',
+    col: '2',
+    row: '3',
   },
   {
     id: 6,
@@ -62,8 +63,7 @@ const projects = [
     icon: '🏥',
     video: '/doctor-ip.mp4',
     link: 'https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink',
-    col: '2',
-    row: '3',
+    row: '1',
   },
   {
     id: 4,

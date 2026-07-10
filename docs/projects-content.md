@@ -38,8 +38,8 @@
 | `icon` | `✨` | 无视频时显示 |
 | `video` | `/ZURU Fuggler.mp4` | `public/` 下文件 |
 | `link` | `https://v.douyin.com/nLAurIMyiC0/` | 空字符串 = 不可点击 |
-| `col` | (空) | 没填 → 自动按顺序 |
-| `row` | `1` | 第 1 行 |
+| `col` | `2` | 第 2 列 |
+| `row` | `3` | 第 3 行 |
 
 ---
 
@@ -92,8 +92,8 @@
 | `icon` | `🏥` | 无视频时显示 |
 | `video` | `/doctor-ip.mp4` | `public/` 下文件 |
 | `link` | `https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink` | 新片场视频链接 |
-| `col` | `2` | 第 2 列 |
-| `row` | `3` | 第 3 行 |
+| `col` | (空) | 自动按顺序 |
+| `row` | `1` | 第 1 行 |
 
 ---
 
