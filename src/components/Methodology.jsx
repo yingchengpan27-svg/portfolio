@@ -21,6 +21,14 @@ const methodologies = [
     relatedProject: 'ZURU Fuggler 爆款内容复刻',
     feishuLink: 'https://my.feishu.cn/wiki/Oiftw7pg6iokybkp5Ixcir4SnBh',
   },
+  {
+    id: 'm3',
+    title: '「ZURU 潮玩创意广告」AI 全流程',
+    desc: '从产品卖点提炼到概念脚本、镜头分镜、提示词工程到成片交付，全链路 AI 化提效。覆盖潮玩/品牌/品类调性，产出一条商业广告片只需传统方式几分之一时间。',
+    tags: ['品牌广告', '多模态', '潮玩创意'],
+    relatedProject: 'ZURU潮玩创意广告',
+    feishuLink: 'https://my.feishu.cn/docx/PPGddKsTVoNXuRxY0D1cDEn9nmb?from=from_copylink',
+  },
 ]
 
 export default function Methodology() {
@@ -67,12 +75,13 @@ export default function Methodology() {
       <style>{`
         /* ===== 网格布局 =====
            2026-07-04:整网格 max-width 收到 760px,每张卡 ~320px(≈1:1 正方形)居中
-           之前是 repeat(2, 1fr) 在 1440 视口下撑满,卡看起来太宽太长 */
+           之前是 repeat(2, 1fr) 在 1440 视口下撑满,卡看起来太宽太长
+           2026-07-13:加 m3 卡,grid 改 3 列, max-width 提到 1100px 跟 Projects 板块视觉协调 */
         .methodology__grid {
           display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 1.25rem;
-          max-width: 760px;
+          max-width: 1100px;
           margin: 0 auto 2rem;
         }
 

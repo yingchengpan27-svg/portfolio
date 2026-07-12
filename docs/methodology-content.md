@@ -33,6 +33,23 @@
 
 ---
 
+## 卡 3 · ZURU 潮玩创意广告创作文档(2026-07-13 新增)
+
+| 字段 | 当前值 | 备注 |
+|------|--------|------|
+| `id` | `m3` | **不要改** |
+| `title` | `「ZURU 潮玩创意广告」AI 全流程` | 大卡标题 |
+| `desc` | `从产品卖点提炼到概念脚本、镜头分镜、提示词工程到成片交付,全链路 AI 化提效。覆盖潮玩/品牌/品类调性,产出一条商业广告片只需传统方式几分之一时间。` | 50-80 字 |
+| `tags` | `['品牌广告', '多模态', '潮玩创意']` | 显示在 body 内 |
+| `relatedProject` | `ZURU潮玩创意广告` | 关联 Projects id=3(2026-07-13 改名) |
+| `feishuLink` | `https://my.feishu.cn/docx/PPGddKsTVoNXuRxY0D1cDEn9nmb?from=from_copylink` | 飞书 docx 链接 |
+
+---
+
+## Section header(整个板块的标题区)
+
+---
+
 ## Section header(整个板块的标题区)
 
 | 字段 | 当前值 | 备注 |
