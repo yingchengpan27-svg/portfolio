@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 
 const projects = [
   {
@@ -15,15 +15,15 @@ const projects = [
     row: '1',
   },
   {
-    id: 2,
-    title: 'ZURU Fuggler 爆款内容复刻',
-    category: 'AI 视觉创作',
-    desc: '主导ZURU品牌产品的AI视觉营销内容创作，通过"产品调性×用户喜好"的深度挖掘与内容重构，打造兼具品牌感知与高传播力的爆款AI视频。',
-    tags: ['AI视频', '写实渲染', '动漫转真人'],
-    gradient: 'linear-gradient(135deg, #F4D758 0%, #D97240 100%)',
-    icon: '✨',
-    video: '/ZURU Fuggler.mp4',
-    link: 'https://v.douyin.com/nLAurIMyiC0/',
+    id: 3,
+    title: 'ZURU潮玩创意广告',
+    category: 'AI视觉创作',
+    desc: '独立负责创意广告全链路流程，通过AI创作形式放大产品卖点。覆盖文生图 / 文生视频 / 角色一致性等 AI 工作流，让产品创意更快、更准地触达目标用户。',
+    tags: ['品牌广告', '多模态', '创意脚本'],
+    gradient: 'linear-gradient(135deg, #fefcf6 0%, #FBE9D8 50%, #D97240 100%)',
+    icon: '🏥',
+    video: '/doctor-ip.mp4',
+    link: 'https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink',
     col: '2',
     row: '3',
   },
@@ -54,15 +54,16 @@ const projects = [
     row: '3',
   },
   {
-    id: 3,
-    title: '抖音医生IP运营',
-    category: '短视频IP运营',
-    desc: '全链路负责医生IP运营，策划多条百万级爆款视频，半年自然涨粉5万+，推动账号累计GMV超200万。',
-    tags: ['抖音', 'IP运营', '百万GMV'],
-    gradient: 'linear-gradient(135deg, #fefcf6 0%, #FBE9D8 50%, #D97240 100%)',
-    icon: '🏥',
-    video: '/doctor-ip.mp4',
-    link: 'https://www.xinpianchang.com/a13744972?from=webShare&channel=copyLink',
+    id: 2,
+    title: 'ZURU Fuggler 爆款内容复刻',
+    category: 'AI 视觉创作',
+    desc: '主导ZURU品牌产品的AI视觉营销内容创作，通过"产品调性×用户喜好"的深度挖掘与内容重构，打造兼具品牌感知与高传播力的爆款AI视频。',
+    tags: ['AI视频', '写实渲染', '动漫转真人'],
+    gradient: 'linear-gradient(135deg, #F4D758 0%, #D97240 100%)',
+    icon: '✨',
+    video: '/ZURU Fuggler.mp4',
+    link: 'https://v.douyin.com/nLAurIMyiC0/',
+    col: '3',
     row: '1',
   },
   {
@@ -77,6 +78,32 @@ const projects = [
     link: 'https://v.douyin.com/w3nOkizPOEI/',
     col: '3',
     row: '3',
+  },
+  {
+    id: 7,
+    title: '万益蓝 · 520 浪漫礼盒信息流视频',
+    category: 'AI 商业广告',
+    desc: '独立完成 520 主题商业 TVC 创作。从蛋糕切开的转场穿梭到瓶内微观世界——夜色情侣依偎在溪边，金色萤火虫悠然飞舞，暖橘色小夜灯营造极致浪漫私密氛围，AI 镜头语言服务商业叙事。',
+    tags: ['商业 TVC', '微观叙事', '浪漫氛围'],
+    gradient: 'linear-gradient(135deg, #faf6eb 0%, #fff3d9 50%, #FBE9D8 100%)',
+    icon: '🎬',
+    video: '/wanyi-1.mp4',
+    link: '',
+    col: '1',
+    row: '2',
+  },
+  {
+    id: 8,
+    title: '万益蓝 · 益生菌科技感 TVC',
+    category: 'AI 商业广告',
+    desc: '独立完成益生菌产品科技感 TVC。一镜到底 + 极简构图聚焦哑光克莱因蓝瓶身，通过深钴蓝背景下的太空微生物可视化，将 400 亿 CFU 益生菌能量概念具象化，呈现严谨硬核的科技美学。',
+    tags: ['产品 TVC', '成分可视化', '科技美学'],
+    gradient: 'linear-gradient(135deg, #faf6eb 0%, #FBE9D8 50%, #D97240 100%)',
+    icon: '🎬',
+    video: '/wanyi-2.mp4',
+    link: '',
+    col: '2',
+    row: '2',
   },
 ]
 
@@ -251,7 +278,7 @@ export default function Projects() {
         .projects__grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-auto-rows: 317px;
+          grid-template-rows: 658px repeat(2, 317px);
           gap: 1.5rem;
         }
 
@@ -455,6 +482,7 @@ export default function Projects() {
         @media (max-width: 1024px) {
           .projects__grid {
             grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto repeat(4, 317px);
           }
           .projects__card--featured {
             grid-column: span 2;
